@@ -15,8 +15,7 @@ const Title = styled(Text)`
 export const About = () => {
   return (
     <Layout>
-      <Title>Find your favorite pokemons</Title>
-      <Title>Explore pokemons</Title>
+      <Title>About</Title>
     </Layout>
   );
 };
