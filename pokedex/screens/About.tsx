@@ -1,6 +1,22 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
+import styled from 'styled-components';
+
+const Layout = styled(View)`
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+`;
+
+const Title = styled(Text)`
+  font-weight: 700;
+`;
 
 export const About = () => {
-  return <View />;
+  return (
+    <Layout>
+      <Title>Find your favorite pokemons</Title>
+      <Title>Explore pokemons</Title>
+    </Layout>
+  );
 };
