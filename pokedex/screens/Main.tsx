@@ -1,17 +1,25 @@
-import React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import styled from 'styled-components';
+import { Result } from '../api/types';
+import { Colors } from '../assets/colors';
 
 const Background = styled(View)`
-  background-color: #fff;
+  background-color: ${Colors.white[0]};
   align-items: center;
   justify-content: center;
   flex: 1;
-  padding: 0 25px;
+  padding: 25px;
 `;
 
 const Title = styled(Text)`
-  color: #000000;
+  color: ${Colors.black};
   font-size: 24px;
   line-height: 28px;
   text-align: center;
@@ -21,16 +29,16 @@ const Search = styled(TextInput)`
   width: 100%;
   padding: 8px 15px;
   margin: 20px;
-  background: #f2f2f2;
+  background: ${Colors.white[1]};
   border-radius: 40px;
-  color: #212121;
+  color: ${Colors.dark};
   font-size: 12px;
   line-height: 15px;
 `;
 
 const Card = styled(View)`
   width: 100%;
-  background: #f6f7f9;
+  background: ${Colors.white[2]};
   border-radius: 10px;
   padding: 5px 25px;
 `;
@@ -38,7 +46,7 @@ const Card = styled(View)`
 const PokeName = styled(Text)`
   font-size: 18px;
   line-height: 21px;
-  color: #212121;
+  color: ${Colors.dark};
   font-weight: 700;
 `;
 
@@ -46,7 +54,7 @@ const Circle = styled(View)`
   width: 38px;
   height: 38px;
   border-radius: 19px;
-  border: 3px solid #000;
+  border: 3px solid ${Colors.black};
   align-items: center;
   justify-content: center;
   margin: 2px;
@@ -56,17 +64,17 @@ const StatsCount = styled(Text)`
   font-weight: 400;
   font-size: 15px;
   line-height: 17px;
-  color: #212121;
+  color: ${Colors.dark};
 `;
 
 const StatsTitle = styled(Text)`
-  color: #4b4b4b;
+  color: ${Colors.gray};
   font-size: 12px;
   line-height: 14px;
 `;
 
 const TypeTitle = styled(StatsTitle)`
-  color: #212121;
+  color: ${Colors.dark};
 `;
 
 const Wrapper = styled(View)`
@@ -78,12 +86,35 @@ const Wrapper = styled(View)`
 `;
 
 export const Main = () => {
-  return (
-    <Background>
-      <Title>800 Pokemons for you to choose your favorite</Title>
-      <Search />
+  const [pokemons, setPokemons] = useState<Result[]>([]);
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    pokemonsFetcher(value);
+  }, [value]);
+
+  const pokemonsFetcher = async (page: number) => {
+    const offset = page * 9;
+    try {
+      const data = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=9`,
+      );
+      const { results } = await data.json();
+      setPokemons([...pokemons, ...results]);
+      setValue(prevState => prevState + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const loadMore = () => {
+    setValue(prevState => prevState + 1);
+  };
+
+  const renderIt = ({ item }) => {
+    return (
       <Card>
-        <PokeName>Charizard</PokeName>
+        <PokeName>{item.name}</PokeName>
         <Wrapper>
           <Circle>
             <StatsCount>419</StatsCount>
@@ -101,6 +132,22 @@ export const Main = () => {
           <TypeTitle>Poison</TypeTitle>
         </Wrapper>
       </Card>
+    );
+  };
+
+  return (
+    <Background>
+      <Title>800 Pokemons for you to choose your favorite</Title>
+      <Search
+        placeholder="Search pokemons"
+        placeholderTextColor={Colors.lightGray}
+      />
+      <FlatList
+        data={pokemons}
+        renderItem={renderIt}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0}
+      />
     </Background>
   );
 };
