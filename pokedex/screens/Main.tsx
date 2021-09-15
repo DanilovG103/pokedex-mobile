@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import styled from 'styled-components';
 import { Result } from '../api/types';
 import { Colors } from '../assets/colors';
@@ -35,6 +41,7 @@ const Card = styled(View)`
   background: ${Colors.white[2]};
   border-radius: 10px;
   padding: 5px 25px;
+  margin: 5px 0;
 `;
 
 const PokeName = styled(Text)`
@@ -79,6 +86,11 @@ const Wrapper = styled(View)`
   align-self: flex-start;
 `;
 
+const Footer = styled(View)`
+  margin-top: 5px;
+  align-items: center;
+`;
+
 export const Main = () => {
   const [pokemons, setPokemons] = useState<Result[]>([]);
   const [value, setValue] = useState(0);
@@ -94,8 +106,7 @@ export const Main = () => {
         `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=9`,
       );
       const { results } = await data.json();
-      setPokemons([...pokemons, ...results]);
-      setValue(prevState => prevState + 1);
+      setPokemons(pokemons.concat(results));
     } catch (error) {
       console.error(error);
     }
@@ -129,6 +140,14 @@ export const Main = () => {
     );
   };
 
+  const renderFooter = () => {
+    return (
+      <Footer>
+        <ActivityIndicator size="large" />
+      </Footer>
+    );
+  };
+
   return (
     <Background>
       <Title>800 Pokemons for you to choose your favorite</Title>
@@ -141,6 +160,7 @@ export const Main = () => {
         renderItem={renderIt}
         onEndReached={loadMore}
         onEndReachedThreshold={0}
+        ListFooterComponent={renderFooter}
       />
     </Background>
   );
