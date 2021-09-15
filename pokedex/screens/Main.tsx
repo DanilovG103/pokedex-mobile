@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, TextInput, FlatList } from 'react-native';
 import styled from 'styled-components';
 import { Result } from '../api/types';
 import { Colors } from '../assets/colors';
