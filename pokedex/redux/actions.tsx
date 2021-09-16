@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { Dispatch } from 'redux';
 
-export const getPokemons = (page: number) => async dispatch => {
+export const getPokemonsList = (page: number) => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: 'GET_POKES_LOADING' });
 
@@ -12,5 +13,22 @@ export const getPokemons = (page: number) => async dispatch => {
     dispatch({ type: 'GET_POKES_SUCCESS', payload: response.data });
   } catch (error) {
     dispatch({ type: 'GET_POKES_ERROR' });
+  }
+};
+
+export const getPokemon = (name: string) => async (dispatch: Dispatch) => {
+  try {
+    dispatch({ type: 'GET_POKEMON_LOADING' });
+
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${name}`,
+    );
+
+    dispatch({
+      type: 'GET_POKEMON_SUCCESS',
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({ type: 'GET_POKEMON_ERROR' });
   }
 };

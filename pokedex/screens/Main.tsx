@@ -8,10 +8,9 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Result } from '../api/types';
 import { Colors } from '../assets/colors';
 import { PokemonCard } from '../components/PokemonCard';
-import { getPokemons } from '../redux/actions';
+import { getPokemon, getPokemonsList } from '../redux/actions';
 
 const Background = styled(View)`
   background-color: ${Colors.white[0]};
@@ -46,12 +45,12 @@ const Footer = styled(View)`
 
 export const Main = () => {
   const [value, setValue] = useState(0);
-  const pokemons = useSelector(state => state.PokemonReducer.pokemons);
+  const { pokemons } = useSelector(state => state.PokemonReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPokemons(value));
-  }, [value]);
+    dispatch(getPokemonsList(value));
+  }, [value, dispatch]);
 
   const loadMore = () => {
     setValue(prevState => prevState + 1);
@@ -77,11 +76,13 @@ export const Main = () => {
         placeholderTextColor={Colors.lightGray}
       />
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={pokemons}
         renderItem={renderIt}
         onEndReached={loadMore}
-        onEndThreshold={0}
+        onEndReachedThreshold={1}
         ListFooterComponent={renderFooter}
+        keyExtractor={() => Math.random().toString()}
       />
     </Background>
   );

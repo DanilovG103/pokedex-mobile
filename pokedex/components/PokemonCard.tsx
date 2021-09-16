@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Colors } from '../assets/colors';
+import { useSelector, useDispatch } from 'react-redux';
+import { getPokemon } from '../redux/actions';
 
-const Card = styled(View)`
+const Card = styled(TouchableOpacity)`
   width: 100%;
   background: ${Colors.white[2]};
   border-radius: 10px;
   padding: 5px 25px;
   margin: 5px 0;
+  elevation: 3;
 `;
 
 const PokeName = styled(Text)`
@@ -53,7 +56,14 @@ const Wrapper = styled(View)`
   align-self: flex-start;
 `;
 
-export const PokemonCard = ({ name }) => {
+interface Props {
+  name: string;
+}
+
+export const PokemonCard = ({ name }: Props) => {
+  const { exPokemons } = useSelector(state => state.PokemonReducer);
+  const dispatch = useDispatch();
+
   return (
     <Card>
       <PokeName>{name}</PokeName>
