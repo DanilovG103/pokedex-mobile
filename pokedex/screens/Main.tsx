@@ -6,11 +6,12 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Result } from '../api/types';
 import { Colors } from '../assets/colors';
 import { PokemonCard } from '../components/PokemonCard';
+import { getPokemons } from '../redux/actions';
 
 const Background = styled(View)`
   background-color: ${Colors.white[0]};
@@ -44,28 +45,15 @@ const Footer = styled(View)`
 `;
 
 export const Main = () => {
-  const [pokemons, setPokemons] = useState<Result[]>([]);
   const [value, setValue] = useState(0);
+  const pokemons = useSelector(state => state.PokemonReducer.pokemons);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    pokemonsFetcher(value);
+    dispatch(getPokemons(value));
   }, [value]);
 
-  const pokemonsFetcher = async (page: number) => {
-    const offset = page * 9;
-    try {
-      const data = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=9`,
-      );
-      const { results } = await data.json();
-      setPokemons(pokemons.concat(results));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const loadMore = () => {
-    console.log('loading...');
     setValue(prevState => prevState + 1);
   };
 
