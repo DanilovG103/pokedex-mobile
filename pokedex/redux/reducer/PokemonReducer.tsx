@@ -2,7 +2,7 @@ const initialState = {
   loading: false,
   pokemons: [],
   errorMessage: '',
-  exPokemons: [{ name: 'bulbasaur' }],
+  pokemon: {},
 };
 
 export default function PokemonReducer(state = initialState, action) {
@@ -33,7 +33,7 @@ export default function PokemonReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        exPokemons: state.exPokemons.concat(action.payload),
+        pokemon: action.payload,
       };
     case 'GET_POKEMON_ERROR':
       return {

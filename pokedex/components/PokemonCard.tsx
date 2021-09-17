@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Colors } from '../assets/colors';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPokemon } from '../redux/actions';
 
 const Card = styled(TouchableOpacity)`
   background: ${Colors.white[2]};
@@ -69,10 +70,15 @@ export const PokemonCard = ({
   types,
   abilities,
 }: Props) => {
-  const { exPokemons } = useSelector(state => state.PokemonReducer);
+  const dispatch = useDispatch();
+
+  const openModal = (bool: boolean) => {
+    activeModal(bool);
+    dispatch(getPokemon(name));
+  };
 
   return (
-    <Card onPress={() => activeModal(true)}>
+    <Card onPress={() => openModal(true)}>
       <PokeName>{name}</PokeName>
       <Image
         source={{ uri: image }}
