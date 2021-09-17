@@ -5,9 +5,9 @@ export const getPokemonsList = (page: number) => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: 'GET_POKES_LOADING' });
 
-    const offset = page * 9;
+    const offset = page * 10;
     const response = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=9`,
+      `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=10`,
     );
 
     dispatch({ type: 'GET_POKES_SUCCESS', payload: response.data });

@@ -5,16 +5,15 @@ import { Colors } from '../assets/colors';
 import { useSelector } from 'react-redux';
 
 const Card = styled(TouchableOpacity)`
-  width: 100%;
   background: ${Colors.white[2]};
   border-radius: 10px;
   padding: 5px 25px;
-  margin: 5px 0;
+  margin: 5px;
   elevation: 3;
 `;
 
 const PokeName = styled(Text)`
-  font-size: 18px;
+  font-size: 16px;
   line-height: 21px;
   color: ${Colors.dark};
   font-weight: 700;
@@ -75,6 +74,10 @@ export const PokemonCard = ({
   return (
     <Card onPress={() => activeModal(true)}>
       <PokeName>{name}</PokeName>
+      <Image
+        source={{ uri: image }}
+        style={{ resizeMode: 'contain', width: 100, height: 100 }}
+      />
       <Wrapper>
         <Circle>
           <StatsCount>419</StatsCount>
@@ -82,10 +85,6 @@ export const PokemonCard = ({
         <Circle>
           <StatsCount>419</StatsCount>
         </Circle>
-        <Image
-          source={{ uri: image }}
-          style={{ resizeMode: 'contain', width: 100, height: 100 }}
-        />
       </Wrapper>
       <Wrapper>
         <StatsTitle>Attack </StatsTitle>
