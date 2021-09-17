@@ -11,14 +11,14 @@ import styled from 'styled-components';
 import { Colors } from '../assets/colors';
 import { PokemonModal } from '../components/Modal';
 import { PokemonCard } from '../components/PokemonCard';
-import { getPokemon, getPokemonsList } from '../redux/actions';
+import { getPokemonsList } from '../redux/actions';
 
 const Background = styled(View)`
   background-color: ${Colors.white[0]};
   align-items: center;
   justify-content: center;
   flex: 1;
-  padding: 25px;
+  padding: 15px 15px 0;
 `;
 
 const Title = styled(Text)`
@@ -31,7 +31,7 @@ const Title = styled(Text)`
 const Search = styled(TextInput)`
   width: 100%;
   padding: 8px 15px;
-  margin: 20px;
+  margin: 20px 40px;
   background: ${Colors.white[1]};
   border-radius: 40px;
   color: ${Colors.dark};
@@ -47,26 +47,29 @@ const Footer = styled(View)`
 export const Main = () => {
   const [value, setValue] = useState(0);
   const [visible, setVisible] = useState(false);
-  const { pokemons, exPokemons } = useSelector(state => state.PokemonReducer);
+  const { pokemons } = useSelector(state => state.PokemonReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getPokemonsList(value));
-    pokemons.forEach(item => {
-      dispatch(getPokemon(item.name));
-    });
-  }, [value, dispatch, pokemons]);
+  }, [value, dispatch]);
 
   const loadMore = () => {
     setValue(prevState => prevState + 1);
   };
 
   const renderIt = ({ item }) => {
+    const id = item.url
+      .replace('https://pokeapi.co/api/v2/pokemon/', '')
+      .replace('/', '');
+
+    const imageLink = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+
     return (
       <PokemonCard
         name={item.name}
         activeModal={setVisible}
-        image={item.sprites?.front_default}
+        image={imageLink}
       />
     );
   };
@@ -87,8 +90,10 @@ export const Main = () => {
         placeholderTextColor={Colors.lightGray}
       />
       <FlatList
+        horizontal={false}
+        numColumns={2}
         showsVerticalScrollIndicator={false}
-        data={exPokemons}
+        data={pokemons}
         renderItem={renderIt}
         onEndReached={loadMore}
         onEndReachedThreshold={1}
