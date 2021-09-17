@@ -9,6 +9,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Colors } from '../assets/colors';
+import { PokemonModal } from '../components/Modal';
 import { PokemonCard } from '../components/PokemonCard';
 import { getPokemon, getPokemonsList } from '../redux/actions';
 
@@ -45,7 +46,8 @@ const Footer = styled(View)`
 
 export const Main = () => {
   const [value, setValue] = useState(0);
-  const { pokemons } = useSelector(state => state.PokemonReducer);
+  const [visible, setVisible] = useState(false);
+  const { pokemons, exPokemons } = useSelector(state => state.PokemonReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,7 +59,7 @@ export const Main = () => {
   };
 
   const renderIt = ({ item }) => {
-    return <PokemonCard name={item.name} />;
+    return <PokemonCard name={item.name} activeModal={setVisible} />;
   };
 
   const renderFooter = () => {
@@ -84,6 +86,7 @@ export const Main = () => {
         ListFooterComponent={renderFooter}
         keyExtractor={() => Math.random().toString()}
       />
+      <PokemonModal visible={visible} setIsVisible={setVisible} />
     </Background>
   );
 };

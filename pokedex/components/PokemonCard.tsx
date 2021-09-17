@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Colors } from '../assets/colors';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPokemon } from '../redux/actions';
 
 const Card = styled(TouchableOpacity)`
   width: 100%;
@@ -58,14 +57,12 @@ const Wrapper = styled(View)`
 
 interface Props {
   name: string;
+  activeModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const PokemonCard = ({ name }: Props) => {
-  const { exPokemons } = useSelector(state => state.PokemonReducer);
-  const dispatch = useDispatch();
-
+export const PokemonCard = ({ name, activeModal }: Props) => {
   return (
-    <Card>
+    <Card onPress={() => activeModal(true)}>
       <PokeName>{name}</PokeName>
       <Wrapper>
         <Circle>
