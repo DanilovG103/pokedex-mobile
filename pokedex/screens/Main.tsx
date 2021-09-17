@@ -52,14 +52,23 @@ export const Main = () => {
 
   useEffect(() => {
     dispatch(getPokemonsList(value));
-  }, [value, dispatch]);
+    pokemons.forEach(item => {
+      dispatch(getPokemon(item.name));
+    });
+  }, [value, dispatch, pokemons]);
 
   const loadMore = () => {
     setValue(prevState => prevState + 1);
   };
 
   const renderIt = ({ item }) => {
-    return <PokemonCard name={item.name} activeModal={setVisible} />;
+    return (
+      <PokemonCard
+        name={item.name}
+        activeModal={setVisible}
+        image={item.sprites?.front_default}
+      />
+    );
   };
 
   const renderFooter = () => {
@@ -79,7 +88,7 @@ export const Main = () => {
       />
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={pokemons}
+        data={exPokemons}
         renderItem={renderIt}
         onEndReached={loadMore}
         onEndReachedThreshold={1}

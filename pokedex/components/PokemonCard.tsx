@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Colors } from '../assets/colors';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Card = styled(TouchableOpacity)`
   width: 100%;
@@ -49,18 +49,29 @@ const TypeTitle = styled(StatsTitle)`
 
 const Wrapper = styled(View)`
   flex-direction: row;
-  margin: 5px 0;
   align-items: center;
   justify-content: center;
   align-self: flex-start;
+  margin: 5px 0;
 `;
 
 interface Props {
   name: string;
   activeModal: React.Dispatch<React.SetStateAction<boolean>>;
+  image: any;
+  types: any;
+  abilities: any;
 }
 
-export const PokemonCard = ({ name, activeModal }: Props) => {
+export const PokemonCard = ({
+  name,
+  activeModal,
+  image,
+  types,
+  abilities,
+}: Props) => {
+  const { exPokemons } = useSelector(state => state.PokemonReducer);
+
   return (
     <Card onPress={() => activeModal(true)}>
       <PokeName>{name}</PokeName>
@@ -71,6 +82,10 @@ export const PokemonCard = ({ name, activeModal }: Props) => {
         <Circle>
           <StatsCount>419</StatsCount>
         </Circle>
+        <Image
+          source={{ uri: image }}
+          style={{ resizeMode: 'contain', width: 100, height: 100 }}
+        />
       </Wrapper>
       <Wrapper>
         <StatsTitle>Attack </StatsTitle>
