@@ -2,7 +2,6 @@ import React from 'react';
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { PokemonTypes } from '../api/types';
 import { Colors } from '../assets/colors';
 
 interface Props {
@@ -15,22 +14,24 @@ const Overlay = styled(TouchableOpacity)`
   flex: 1;
   justify-content: center;
   align-items: center;
+  padding: 0 20px;
 `;
 
 const PokemonInfoBlock = styled(View)`
+  width: 100%;
   padding: 10px;
-  background-color: ${Colors.white[1]};
+  background-color: ${Colors.black};
   border-radius: 10px;
 `;
 
 const Title = styled(Text)`
   font-size: 32px;
   text-align: center;
-  color: ${Colors.dark};
+  color: ${Colors.white[1]};
   text-transform: capitalize;
 `;
 
-const Circle = styled(View)`
+const YellowCircle = styled(View)`
   width: 38px;
   height: 38px;
   border-radius: 19px;
@@ -40,7 +41,7 @@ const Circle = styled(View)`
 `;
 
 const Experience = styled(Text)`
-  color: ${Colors.dark};
+  color: ${Colors.white[1]};
   font-size: 16px;
 `;
 
@@ -48,22 +49,85 @@ const Types = styled(Text)`
   text-transform: capitalize;
   font-size: 15px;
   margin-left: 15px;
+  color: ${Colors.white[1]};
+`;
+
+const AbilitiesBlock = styled(View)`
+  background-color: ${Colors.white[1]};
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 8px;
+`;
+
+const AbilitiesBlockTitle = styled(Text)`
+  font-size: 24px;
+`;
+
+const Ability = styled(Text)`
+  text-transform: capitalize;
+  font-size: 17px;
+`;
+
+const Statistics = styled(AbilitiesBlock)``;
+
+const StatisticsTitle = styled(Text)`
+  font-size: 18px;
+  text-transform: capitalize;
+`;
+
+const StatisticsValue = styled(Text)`
+  font-size: 16px;
+  margin-top: 3px;
+  font-weight: 700;
+`;
+
+const Row = styled(View)`
+  margin-top: 5px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Block = styled(View)`
+  width: 55px;
+  height: 80px;
+  align-items: center;
+  justify-content: center;
+  background: ${Colors.white[1]};
+  border-radius: 8px;
+`;
+
+const Circle = styled(View)`
+  align-items: center;
+  justify-content: center;
+  border: 3px solid ${Colors.black};
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+`;
+
+const StatsTitle = styled(StatisticsTitle)`
+  font-size: 14px;
+  text-align: center;
 `;
 
 export const PokemonModal = ({ visible, setIsVisible }: Props) => {
   const { pokemon } = useSelector(state => state.PokemonReducer);
 
-  console.log(pokemon);
+  if (!pokemon) {
+    return <></>;
+  }
+
   return (
-    <Modal transparent={true} visible={visible}>
+    <Modal transparent={true} visible={visible} animationType="fade">
       <Overlay onPress={() => setIsVisible(false)}>
         <PokemonInfoBlock>
           <Title>{pokemon.name}</Title>
           <Image
             style={{
               resizeMode: 'contain',
-              width: 150,
-              height: 150,
+              width: 200,
+              height: 200,
               alignSelf: 'center',
             }}
             source={{
@@ -71,13 +135,44 @@ export const PokemonModal = ({ visible, setIsVisible }: Props) => {
             }}
           />
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Circle>
+            <YellowCircle>
               <Experience>{pokemon.base_experience}</Experience>
-            </Circle>
-            {pokemon.types.map(el => (
+            </YellowCircle>
+            {pokemon.types?.map(el => (
               <Types> {el.type.name}</Types>
             ))}
           </View>
+          <AbilitiesBlock>
+            <AbilitiesBlockTitle>Abilities</AbilitiesBlockTitle>
+            {pokemon.abilities?.map(el => (
+              <Ability>
+                {'-'}
+                {el.ability.name}
+              </Ability>
+            ))}
+          </AbilitiesBlock>
+          <Statistics>
+            <StatisticsTitle>Healthy Points</StatisticsTitle>
+            <StatisticsValue>
+              {pokemon.stats
+                ?.filter(el => el.stat.name === 'hp')
+                ?.map(el => el.base_stat)}
+            </StatisticsValue>
+            <StatisticsTitle>Experience</StatisticsTitle>
+            <StatisticsValue>{pokemon.base_experience}</StatisticsValue>
+          </Statistics>
+          <Row>
+            {pokemon.stats
+              ?.filter(el => el.stat.name !== 'hp' && el.stat.name !== 'speed')
+              ?.map(el => (
+                <Block>
+                  <Circle>
+                    <StatisticsValue>{el.base_stat}</StatisticsValue>
+                  </Circle>
+                  <StatsTitle>{el.stat.name}</StatsTitle>
+                </Block>
+              ))}
+          </Row>
         </PokemonInfoBlock>
       </Overlay>
     </Modal>
