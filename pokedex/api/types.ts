@@ -30,6 +30,7 @@ type Ability = {
 };
 
 export type PokemonTypes = {
+  id: number;
   name: string;
   abilities: Ability[];
   stats: Stats[];

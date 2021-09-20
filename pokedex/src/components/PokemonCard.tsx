@@ -60,6 +60,13 @@ const Wrapper = styled(View)`
   margin: 5px 0;
 `;
 
+const PokemonImage = styled(Image)`
+  resize-mode: contain;
+  width: 150px;
+  height: 120px;
+  align-self: center;
+  margin-left: 30;
+`;
 interface Props {
   pokemon: PokemonTypes;
   activeModal: Dispatch<SetStateAction<boolean>>;
@@ -94,16 +101,11 @@ export const PokemonCard = ({ pokemon, activeModal }: Props) => {
           <TypeTitle>Poison</TypeTitle>
         </Wrapper>
       </View>
-      {/* <Image
-        source={{ uri: image }}
-        style={{
-          resizeMode: 'contain',
-          width: 150,
-          height: 125,
-          alignSelf: 'center',
-          marginLeft: 30,
+      <PokemonImage
+        source={{
+          uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`,
         }}
-      /> */}
+      />
     </Card>
   );
 };
