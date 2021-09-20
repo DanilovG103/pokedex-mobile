@@ -90,8 +90,6 @@ export const Main = () => {
         placeholderTextColor={Colors.lightGray}
       />
       <FlatList
-        horizontal={false}
-        numColumns={2}
         showsVerticalScrollIndicator={false}
         data={pokemons}
         renderItem={renderIt}

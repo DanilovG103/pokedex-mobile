@@ -6,14 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPokemon } from '../redux/actions';
 
 const Card = styled(TouchableOpacity)`
+  flex-direction: row;
   background: ${Colors.white[2]};
   border-radius: 10px;
-  padding: 5px 25px;
+  padding: 5px 0 5px 25px;
   margin: 5px;
+  margin-bottom: 10px;
   elevation: 3;
 `;
 
 const PokeName = styled(Text)`
+  margin-top: 5px;
+  text-transform: capitalize;
   font-size: 16px;
   line-height: 21px;
   color: ${Colors.dark};
@@ -27,7 +31,7 @@ const Circle = styled(View)`
   border: 3px solid ${Colors.black};
   align-items: center;
   justify-content: center;
-  margin: 2px;
+  margin: 5px 0;
 `;
 
 const StatsCount = styled(Text)`
@@ -79,27 +83,35 @@ export const PokemonCard = ({
 
   return (
     <Card onPress={() => openModal(true)}>
-      <PokeName>{name}</PokeName>
+      <View>
+        <PokeName>{name}</PokeName>
+        <Wrapper>
+          <Circle>
+            <StatsCount>419</StatsCount>
+          </Circle>
+          <Circle style={{ marginLeft: 2 }}>
+            <StatsCount>419</StatsCount>
+          </Circle>
+        </Wrapper>
+        <Wrapper>
+          <StatsTitle>Attack </StatsTitle>
+          <StatsTitle>Defence</StatsTitle>
+        </Wrapper>
+        <Wrapper>
+          <TypeTitle>Grass </TypeTitle>
+          <TypeTitle>Poison</TypeTitle>
+        </Wrapper>
+      </View>
       <Image
         source={{ uri: image }}
-        style={{ resizeMode: 'contain', width: 100, height: 100 }}
+        style={{
+          resizeMode: 'contain',
+          width: 150,
+          height: 125,
+          alignSelf: 'center',
+          marginLeft: 30,
+        }}
       />
-      <Wrapper>
-        <Circle>
-          <StatsCount>419</StatsCount>
-        </Circle>
-        <Circle>
-          <StatsCount>419</StatsCount>
-        </Circle>
-      </Wrapper>
-      <Wrapper>
-        <StatsTitle>Attack </StatsTitle>
-        <StatsTitle>Defence</StatsTitle>
-      </Wrapper>
-      <Wrapper>
-        <TypeTitle>Grass </TypeTitle>
-        <TypeTitle>Poison</TypeTitle>
-      </Wrapper>
     </Card>
   );
 };
