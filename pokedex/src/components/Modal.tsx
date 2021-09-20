@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Colors, typeColors } from '../assets/colors';
+import { Colors, typeColors } from '../theme/colors';
 import { switchProp } from 'styled-tools';
-import { CloseIcon } from './CloseIcon';
+import { CloseIcon } from '../assets/images/icons/CloseIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { setPokemon } from '../redux/actions';
+import { setPokemon } from '../store/actions';
+
 interface Props {
   visible: boolean;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 const Overlay = styled(View)`

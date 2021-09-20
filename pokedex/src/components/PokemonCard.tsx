@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { Colors } from '../assets/colors';
+import { Colors } from '../theme/colors';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPokemon } from '../redux/actions';
+import { getPokemon } from '../store/actions';
+import { PokemonTypes } from '../../api/types';
 
 const Card = styled(TouchableOpacity)`
   flex-direction: row;
@@ -60,31 +61,22 @@ const Wrapper = styled(View)`
 `;
 
 interface Props {
-  name: string;
-  activeModal: React.Dispatch<React.SetStateAction<boolean>>;
-  image: any;
-  types: any;
-  abilities: any;
+  pokemon: PokemonTypes;
+  activeModal: Dispatch<SetStateAction<boolean>>;
 }
 
-export const PokemonCard = ({
-  name,
-  activeModal,
-  image,
-  types,
-  abilities,
-}: Props) => {
+export const PokemonCard = ({ pokemon, activeModal }: Props) => {
   const dispatch = useDispatch();
 
   const openModal = (bool: boolean) => {
     activeModal(bool);
-    dispatch(getPokemon(name));
+    dispatch(getPokemon(pokemon.name));
   };
 
   return (
     <Card onPress={() => openModal(true)}>
       <View>
-        <PokeName>{name}</PokeName>
+        <PokeName>{pokemon.name}</PokeName>
         <Wrapper>
           <Circle>
             <StatsCount>419</StatsCount>
@@ -102,7 +94,7 @@ export const PokemonCard = ({
           <TypeTitle>Poison</TypeTitle>
         </Wrapper>
       </View>
-      <Image
+      {/* <Image
         source={{ uri: image }}
         style={{
           resizeMode: 'contain',
@@ -111,7 +103,7 @@ export const PokemonCard = ({
           alignSelf: 'center',
           marginLeft: 30,
         }}
-      />
+      /> */}
     </Card>
   );
 };

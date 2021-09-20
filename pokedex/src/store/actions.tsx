@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
-import { PokemonTypes } from '../api/types';
+import { PokemonTypes } from '../../api/types';
 
 export const getPokemonsList = (page: number) => async (dispatch: Dispatch) => {
   try {
@@ -11,7 +11,13 @@ export const getPokemonsList = (page: number) => async (dispatch: Dispatch) => {
       `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=9`,
     );
 
-    dispatch({ type: 'GET_POKES_SUCCESS', payload: response.data });
+    const datas = response.data.results.map(el =>
+      fetch(el.url).then(res => res.json()),
+    );
+
+    const pokemons = await Promise.all(datas);
+
+    dispatch({ type: 'GET_POKES_SUCCESS', payload: pokemons });
   } catch (error) {
     dispatch({ type: 'GET_POKES_ERROR' });
   }

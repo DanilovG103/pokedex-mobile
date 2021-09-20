@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Colors } from '../assets/colors';
-import { PokemonModal } from '../components/Modal';
-import { PokemonCard } from '../components/PokemonCard';
-import { getPokemonsList } from '../redux/actions';
+import { Colors } from '../src/theme/colors';
+import { PokemonModal } from '../src/components/Modal';
+import { PokemonCard } from '../src/components/PokemonCard';
+import { getPokemonsList } from '../src/store/actions';
 
 const Background = styled(View)`
   background-color: ${Colors.white[0]};
@@ -59,19 +59,7 @@ export const Main = () => {
   };
 
   const renderIt = ({ item }) => {
-    const id = item.url
-      .replace('https://pokeapi.co/api/v2/pokemon/', '')
-      .replace('/', '');
-
-    const imageLink = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-
-    return (
-      <PokemonCard
-        name={item.name}
-        activeModal={setVisible}
-        image={imageLink}
-      />
-    );
+    return <PokemonCard pokemon={item} activeModal={setVisible} />;
   };
 
   const renderFooter = () => {

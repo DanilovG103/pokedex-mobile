@@ -1,10 +1,10 @@
 import React from 'react';
-import { Main } from '../screens/Main';
-import { Legendaries } from '../screens/Legendaries';
-import { Compare } from '../screens/Compare';
+import { Main } from '../../screens/Main';
+import { Legendaries } from '../../screens/Legendaries';
+import { Compare } from '../../screens/Compare';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Header } from './Header';
-import { Colors } from '../assets/colors';
+import { Colors } from '../theme/colors';
 
 const Drawer = createDrawerNavigator();
 

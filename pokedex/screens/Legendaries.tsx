@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import styled from 'styled-components';
-import { Colors } from '../assets/colors';
+import { Colors } from '../src/theme/colors';
 
 const Wrapper = styled(ScrollView)`
   background-color: ${Colors.white[0]};

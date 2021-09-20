@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
-import { Logo } from './Logo';
+import { Logo } from '../assets/images/icons/Logo';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Colors } from '../assets/colors';
+import { Colors } from '../theme/colors';
 
 const Container = styled(View)`
   padding: 10px 25px;
