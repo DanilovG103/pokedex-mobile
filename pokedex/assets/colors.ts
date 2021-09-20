@@ -6,6 +6,7 @@ export const Colors = {
   gray: '#4b4b4b',
   lightGray: '#808080',
   yellow: '#F2CB07',
+  yellow1: '#F5DB13',
   grass: '#70A83B',
   water: '#A2CFF0 ',
   fire: '#F76545',
