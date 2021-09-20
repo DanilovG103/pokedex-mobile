@@ -2,8 +2,8 @@ import React from 'react';
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Colors } from '../assets/colors';
-
+import { Colors, typeColors } from '../assets/colors';
+import { switchProp } from 'styled-tools';
 interface Props {
   visible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,11 +45,26 @@ const Experience = styled(Text)`
   font-size: 16px;
 `;
 
+const TypesBlock = styled(View)<{ typeColor: string }>`
+  margin-left: 5px;
+  padding: 0 10px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background-color: ${switchProp('typeColor', typeColors)};
+`;
+
 const Types = styled(Text)`
   text-transform: capitalize;
   font-size: 15px;
-  margin-left: 15px;
-  color: ${Colors.white[1]};
+  color: ${Colors.dark};
+`;
+
+const TypesRow = styled(View)`
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+  padding-right: 50;
 `;
 
 const AbilitiesBlock = styled(View)`
@@ -82,7 +97,7 @@ const StatisticsValue = styled(Text)`
 `;
 
 const Row = styled(View)`
-  margin-top: 5px;
+  margin-top: 10px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -138,9 +153,13 @@ export const PokemonModal = ({ visible, setIsVisible }: Props) => {
             <YellowCircle>
               <Experience>{pokemon.base_experience}</Experience>
             </YellowCircle>
-            {pokemon.types?.map(el => (
-              <Types> {el.type.name}</Types>
-            ))}
+            <TypesRow>
+              {pokemon.types?.map(el => (
+                <TypesBlock typeColor={el.type.name}>
+                  <Types>{el.type.name}</Types>
+                </TypesBlock>
+              ))}
+            </TypesRow>
           </View>
           <AbilitiesBlock>
             <AbilitiesBlockTitle>Abilities</AbilitiesBlockTitle>
