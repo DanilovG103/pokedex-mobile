@@ -19,11 +19,13 @@ export const Navs = () => {
           borderBottomRightRadius: 10,
           width: '100%',
           height: 300,
+          paddingHorizontal: 100,
         },
         drawerActiveBackgroundColor: 'transparent',
         drawerLabelStyle: {
           fontSize: 24,
           color: Colors.black,
+          marginRight: -50,
         },
         header: ({ navigation }) => {
           return <Header open={navigation.openDrawer} />;
