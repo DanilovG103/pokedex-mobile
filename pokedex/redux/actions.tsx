@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
+import { PokemonTypes } from '../api/types';
 
 export const getPokemonsList = (page: number) => async (dispatch: Dispatch) => {
   try {
@@ -31,4 +32,8 @@ export const getPokemon = (name: string) => async (dispatch: Dispatch) => {
   } catch (error) {
     dispatch({ type: 'GET_POKEMON_ERROR' });
   }
+};
+
+export const setPokemon = (pokemon: PokemonTypes) => (dispatch: Dispatch) => {
+  dispatch({ type: 'SET_POKEMON', payload: pokemon });
 };

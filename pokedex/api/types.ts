@@ -33,13 +33,6 @@ export type PokemonTypes = {
   name: string;
   abilities: Ability[];
   stats: Stats[];
-  sprites: {
-    other: {
-      dream_world: {
-        front_default: string;
-      };
-    };
-  };
   types: Types[];
   base_experience: number;
 };

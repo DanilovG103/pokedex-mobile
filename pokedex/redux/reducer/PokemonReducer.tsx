@@ -3,6 +3,7 @@ const initialState = {
   pokemons: [],
   errorMessage: '',
   pokemon: {},
+  comparedPokemons: [],
 };
 
 export default function PokemonReducer(state = initialState, action) {
@@ -40,6 +41,11 @@ export default function PokemonReducer(state = initialState, action) {
         ...state,
         loading: false,
         errorMessage: 'An error occured',
+      };
+    case 'SET_POKEMON':
+      return {
+        ...state,
+        comparedPokemons: state.comparedPokemons.concat(action.payload),
       };
     default:
       return state;

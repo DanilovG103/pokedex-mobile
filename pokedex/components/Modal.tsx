@@ -1,15 +1,18 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Colors, typeColors } from '../assets/colors';
 import { switchProp } from 'styled-tools';
+import { CloseIcon } from './CloseIcon';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { setPokemon } from '../redux/actions';
 interface Props {
   visible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Overlay = styled(TouchableOpacity)`
+const Overlay = styled(View)`
   background-color: rgba(0, 0, 0, 0.7);
   flex: 1;
   justify-content: center;
@@ -64,7 +67,7 @@ const TypesRow = styled(View)`
   flex-direction: row;
   justify-content: flex-end;
   width: 100%;
-  padding-right: 50;
+  padding-right: 50px;
 `;
 
 const AbilitiesBlock = styled(View)`
@@ -92,7 +95,6 @@ const StatisticsTitle = styled(Text)`
 
 const StatisticsValue = styled(Text)`
   font-size: 16px;
-  margin-top: 3px;
   font-weight: 700;
 `;
 
@@ -126,8 +128,15 @@ const StatsTitle = styled(StatisticsTitle)`
   text-align: center;
 `;
 
+const UpperRow = styled(View)`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const PokemonModal = ({ visible, setIsVisible }: Props) => {
   const { pokemon } = useSelector(state => state.PokemonReducer);
+  const dispatch = useDispatch();
 
   if (!pokemon) {
     return <></>;
@@ -135,9 +144,17 @@ export const PokemonModal = ({ visible, setIsVisible }: Props) => {
 
   return (
     <Modal transparent={true} visible={visible} animationType="fade">
-      <Overlay onPress={() => setIsVisible(false)}>
+      <Overlay>
         <PokemonInfoBlock>
-          <Title>{pokemon.name}</Title>
+          <UpperRow>
+            <TouchableOpacity onPress={() => setIsVisible(false)}>
+              <CloseIcon />
+            </TouchableOpacity>
+            <Title>{pokemon.name}</Title>
+            <TouchableOpacity onPress={() => dispatch(setPokemon(pokemon))}>
+              <Icon name="bar-chart" color="white" size={30} />
+            </TouchableOpacity>
+          </UpperRow>
           <Image
             style={{
               resizeMode: 'contain',
