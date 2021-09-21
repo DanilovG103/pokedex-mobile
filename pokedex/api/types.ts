@@ -37,3 +37,7 @@ export type PokemonTypes = {
   types: Types[];
   base_experience: number;
 };
+
+export interface ItemRenderProps {
+  item: PokemonTypes;
+}

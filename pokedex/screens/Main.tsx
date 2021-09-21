@@ -12,6 +12,7 @@ import { Colors } from '../src/theme/colors';
 import { PokemonModal } from '../src/components/Modal';
 import { PokemonCard } from '../src/components/PokemonCard';
 import { getPokemonsList } from '../src/store/actions';
+import { ItemRenderProps, PokemonTypes } from '../api/types';
 
 const Background = styled(View)`
   background-color: ${Colors.white[0]};
@@ -58,7 +59,7 @@ export const Main = () => {
     setPagination(prevState => prevState + 1);
   };
 
-  const renderIt = ({ item }) => {
+  const renderIt = ({ item }: ItemRenderProps) => {
     return <PokemonCard pokemon={item} activeModal={setVisible} />;
   };
 
@@ -84,7 +85,7 @@ export const Main = () => {
         onEndReached={loadMore}
         onEndReachedThreshold={1}
         ListFooterComponent={renderFooter}
-        keyExtractor={() => Math.random().toString()}
+        keyExtractor={item => item.id.toString()}
       />
       <PokemonModal visible={visible} setIsVisible={setVisible} />
     </Background>

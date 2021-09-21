@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { ItemRenderProps } from '../api/types';
 import { ComparingCard } from '../src/components/ComparingCard';
 
 const Container = styled(View)`
@@ -24,7 +25,7 @@ export const Compare = () => {
     return <NoPokemons>Nothing to compare</NoPokemons>;
   }
 
-  const renderPokemons = ({ item }) => {
+  const renderPokemons = ({ item }: ItemRenderProps) => {
     return <ComparingCard pokemon={item} />;
   };
 
@@ -34,7 +35,7 @@ export const Compare = () => {
         data={comparedPokemons}
         renderItem={renderPokemons}
         showsVerticalScrollIndicator={false}
-        keyExtractor={() => Math.random().toString()}
+        keyExtractor={item => item.id.toString()}
       />
     </Container>
   );

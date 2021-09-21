@@ -23,7 +23,7 @@ export default function PokemonReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        pokemons: state.pokemons.concat(action.payload),
+        pokemons: [...state.pokemons, ...action.payload],
       };
     case 'GET_POKEMON_LOADING':
       return {
