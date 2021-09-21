@@ -45,17 +45,17 @@ const Footer = styled(View)`
 `;
 
 export const Main = () => {
-  const [value, setValue] = useState(0);
+  const [pagination, setPagination] = useState(0);
   const [visible, setVisible] = useState(false);
   const { pokemons } = useSelector(state => state.PokemonReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPokemonsList(value));
-  }, [value, dispatch]);
+    dispatch(getPokemonsList(pagination));
+  }, [pagination, dispatch]);
 
   const loadMore = () => {
-    setValue(prevState => prevState + 1);
+    setPagination(prevState => prevState + 1);
   };
 
   const renderIt = ({ item }) => {
