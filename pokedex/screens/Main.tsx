@@ -12,7 +12,7 @@ import { Colors } from '../src/theme/colors';
 import { PokemonModal } from '../src/components/Modal';
 import { PokemonCard } from '../src/components/PokemonCard';
 import { getPokemonsList } from '../src/store/actions';
-import { ItemRenderProps, PokemonTypes } from '../api/types';
+import { ItemRenderProps } from '../api/types';
 
 const Background = styled(View)`
   background-color: ${Colors.white[0]};
@@ -32,7 +32,7 @@ const Title = styled(Text)`
 const Search = styled(TextInput)`
   width: 100%;
   padding: 8px 15px;
-  margin: 20px 40px;
+  margin: 20px 40px 0;
   background: ${Colors.white[1]};
   border-radius: 40px;
   color: ${Colors.dark};
