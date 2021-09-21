@@ -8,7 +8,7 @@ import { ComparingCard } from '../src/components/ComparingCard';
 const Container = styled(View)`
   flex: 1;
   align-items: center;
-  padding: 15px;
+  padding: 0 15px;
 `;
 
 const NoPokemons = styled(Text)`
