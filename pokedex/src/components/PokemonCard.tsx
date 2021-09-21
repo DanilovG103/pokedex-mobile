@@ -94,7 +94,7 @@ export const PokemonCard = ({ pokemon, activeModal }: Props) => {
               el => el.stat.name === 'attack' || el.stat.name === 'defense',
             )
             .map(el => (
-              <View>
+              <View key={el.stat.name}>
                 <Circle>
                   <StatsCount>{el.base_stat}</StatsCount>
                 </Circle>
@@ -104,7 +104,7 @@ export const PokemonCard = ({ pokemon, activeModal }: Props) => {
         </Wrapper>
         <Wrapper width={120}>
           {pokemon.types.map(el => (
-            <TypeBlock type={el.type.name}>
+            <TypeBlock key={el.type.name} type={el.type.name}>
               <TypeTitle>{el.type.name} </TypeTitle>
             </TypeBlock>
           ))}
