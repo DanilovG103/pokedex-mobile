@@ -24,7 +24,7 @@ const Overlay = styled(View)`
 const PokemonInfoBlock = styled(View)`
   width: 100%;
   padding: 10px;
-  background-color: #d9dedb;
+  background-color: ${Colors.white[3]};
   border-radius: 10px;
 `;
 
