@@ -47,6 +47,7 @@ const Footer = styled(View)`
 
 export const Main = () => {
   const [pagination, setPagination] = useState(0);
+  const [searchValue, setSearchValue] = useState('');
   const [visible, setVisible] = useState(false);
   const { pokemons } = useSelector(state => state.PokemonReducer);
   const dispatch = useDispatch();
@@ -77,10 +78,14 @@ export const Main = () => {
       <Search
         placeholder="Search pokemons"
         placeholderTextColor={Colors.lightGray}
+        value={searchValue}
+        onChangeText={value => setSearchValue(value)}
       />
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={pokemons}
+        data={pokemons.filter(item =>
+          item.name.toLowerCase().includes(searchValue),
+        )}
         renderItem={renderIt}
         onEndReached={loadMore}
         onEndReachedThreshold={1}
