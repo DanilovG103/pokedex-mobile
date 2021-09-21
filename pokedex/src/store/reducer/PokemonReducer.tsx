@@ -52,6 +52,11 @@ export default function PokemonReducer(state = initialState, action) {
         ...state,
         pokemon: null,
       };
+    case 'CLEAR_COMPARED_POKEMONS':
+      return {
+        ...state,
+        comparedPokemons: [],
+      };
     default:
       return state;
   }
