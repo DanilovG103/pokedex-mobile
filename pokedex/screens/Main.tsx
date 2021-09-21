@@ -72,6 +72,11 @@ export const Main = () => {
     );
   };
 
+  const search = (value: string) => {
+    setSearchValue(value);
+    setPagination(prevState => prevState + 1);
+  };
+
   return (
     <Background>
       <Title>800 Pokemons for you to choose your favorite</Title>
@@ -79,7 +84,7 @@ export const Main = () => {
         placeholder="Search pokemons"
         placeholderTextColor={Colors.lightGray}
         value={searchValue}
-        onChangeText={value => setSearchValue(value)}
+        onChangeText={value => search(value)}
       />
       <FlatList
         showsVerticalScrollIndicator={false}
