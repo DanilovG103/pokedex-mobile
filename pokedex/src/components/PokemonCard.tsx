@@ -52,14 +52,6 @@ const StatsTitle = styled(Text)`
   line-height: 14px;
 `;
 
-const TypesRow = styled(View)`
-  width: 120px;
-  margin: 5px 0;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
 const TypeBlock = styled(View)<{ typeColor: string }>`
   padding: 0 10px;
   align-items: center;
@@ -72,12 +64,11 @@ const TypeTitle = styled(StatsTitle)`
   color: ${Colors.dark};
 `;
 
-const Wrapper = styled(View)`
-  width: 90px;
+const Wrapper = styled(View)<{ width?: number }>`
+  width: ${prop => prop.width ?? 90}px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  align-self: flex-start;
   margin: 5px 0;
 `;
 
@@ -119,13 +110,13 @@ export const PokemonCard = ({ pokemon, activeModal }: Props) => {
               </View>
             ))}
         </Wrapper>
-        <TypesRow>
+        <Wrapper width={120}>
           {pokemon.types.map(el => (
             <TypeBlock typeColor={el.type.name}>
               <TypeTitle>{el.type.name} </TypeTitle>
             </TypeBlock>
           ))}
-        </TypesRow>
+        </Wrapper>
       </View>
       <PokemonImage
         source={{
