@@ -24,14 +24,14 @@ const Overlay = styled(View)`
 const PokemonInfoBlock = styled(View)`
   width: 100%;
   padding: 10px;
-  background-color: ${Colors.black};
+  background-color: #d9dedb;
   border-radius: 10px;
 `;
 
 const Title = styled(Text)`
   font-size: 32px;
   text-align: center;
-  color: ${Colors.white[1]};
+  color: ${Colors.dark};
   text-transform: capitalize;
 `;
 
@@ -139,10 +139,6 @@ export const PokemonModal = ({ visible, setIsVisible }: Props) => {
   const { pokemon } = useSelector(state => state.PokemonReducer);
   const dispatch = useDispatch();
 
-  if (!pokemon) {
-    return <></>;
-  }
-
   return (
     <Modal transparent={true} visible={visible} animationType="fade">
       <Overlay>
@@ -153,7 +149,7 @@ export const PokemonModal = ({ visible, setIsVisible }: Props) => {
             </TouchableOpacity>
             <Title>{pokemon.name}</Title>
             <TouchableOpacity onPress={() => dispatch(setPokemon(pokemon))}>
-              <Icon name="bar-chart" color="white" size={30} />
+              <Icon name="bar-chart" size={30} />
             </TouchableOpacity>
           </UpperRow>
           <Image
