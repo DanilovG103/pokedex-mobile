@@ -1,16 +1,19 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import styled from 'styled-components';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { Colors } from '../theme/colors';
-import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { switchProp } from 'styled-tools';
+import { Colors, typeColors } from '../theme/colors';
+import { useDispatch } from 'react-redux';
 import { getPokemon } from '../store/actions';
 import { PokemonTypes } from '../../api/types';
 
 const Card = styled(TouchableOpacity)`
+  align-items: center;
+  justify-content: space-between;
   flex-direction: row;
   background: ${Colors.white[2]};
   border-radius: 10px;
-  padding: 5px 0 5px 25px;
+  padding: 5px 0 5px 20px;
   margin: 5px;
   margin-bottom: 10px;
   elevation: 3;
@@ -43,9 +46,26 @@ const StatsCount = styled(Text)`
 `;
 
 const StatsTitle = styled(Text)`
+  text-transform: capitalize;
   color: ${Colors.gray};
   font-size: 12px;
   line-height: 14px;
+`;
+
+const TypesRow = styled(View)`
+  width: 120px;
+  margin: 5px 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const TypeBlock = styled(View)<{ typeColor: string }>`
+  padding: 0 10px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background-color: ${switchProp('typeColor', typeColors)};
 `;
 
 const TypeTitle = styled(StatsTitle)`
@@ -53,9 +73,10 @@ const TypeTitle = styled(StatsTitle)`
 `;
 
 const Wrapper = styled(View)`
+  width: 90px;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   align-self: flex-start;
   margin: 5px 0;
 `;
@@ -65,8 +86,8 @@ const PokemonImage = styled(Image)`
   width: 150px;
   height: 120px;
   align-self: center;
-  margin-left: 30;
 `;
+
 interface Props {
   pokemon: PokemonTypes;
   activeModal: Dispatch<SetStateAction<boolean>>;
@@ -85,21 +106,26 @@ export const PokemonCard = ({ pokemon, activeModal }: Props) => {
       <View>
         <PokeName>{pokemon.name}</PokeName>
         <Wrapper>
-          <Circle>
-            <StatsCount>419</StatsCount>
-          </Circle>
-          <Circle style={{ marginLeft: 2 }}>
-            <StatsCount>419</StatsCount>
-          </Circle>
+          {pokemon.stats
+            .filter(
+              el => el.stat.name === 'attack' || el.stat.name === 'defense',
+            )
+            .map(el => (
+              <View>
+                <Circle>
+                  <StatsCount>{el.base_stat}</StatsCount>
+                </Circle>
+                <StatsTitle>{el.stat.name}</StatsTitle>
+              </View>
+            ))}
         </Wrapper>
-        <Wrapper>
-          <StatsTitle>Attack </StatsTitle>
-          <StatsTitle>Defence</StatsTitle>
-        </Wrapper>
-        <Wrapper>
-          <TypeTitle>Grass </TypeTitle>
-          <TypeTitle>Poison</TypeTitle>
-        </Wrapper>
+        <TypesRow>
+          {pokemon.types.map(el => (
+            <TypeBlock typeColor={el.type.name}>
+              <TypeTitle>{el.type.name} </TypeTitle>
+            </TypeBlock>
+          ))}
+        </TypesRow>
       </View>
       <PokemonImage
         source={{
