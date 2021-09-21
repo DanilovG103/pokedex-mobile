@@ -32,7 +32,7 @@ const Title = styled(Text)`
 const Search = styled(TextInput)`
   width: 100%;
   padding: 8px 15px;
-  margin: 20px 40px 0;
+  margin: 20px 40px;
   background: ${Colors.white[1]};
   border-radius: 40px;
   color: ${Colors.dark};
