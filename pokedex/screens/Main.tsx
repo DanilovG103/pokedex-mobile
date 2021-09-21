@@ -103,7 +103,7 @@ export const Main = () => {
       <FlatList
         showsVerticalScrollIndicator={false}
         data={pokemons.filter(item =>
-          item.name.toLowerCase().includes(searchValue),
+          item.name.toLowerCase().includes(searchValue.toLowerCase()),
         )}
         renderItem={renderIt}
         onEndReached={loadMore}
