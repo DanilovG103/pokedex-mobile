@@ -14,6 +14,7 @@ import { PokemonModal } from '../src/components/Modal';
 import { PokemonCard } from '../src/components/PokemonCard';
 import { getPokemonsList } from '../src/store/actions';
 import { ItemRenderProps } from '../api/types';
+import { FilterModal } from '../src/components/FilterModal';
 
 const Background = styled(View)`
   background-color: ${Colors.white[0]};
@@ -57,7 +58,8 @@ const Filter = styled(TouchableOpacity)`
 export const Main = () => {
   const [pagination, setPagination] = useState(0);
   const [searchValue, setSearchValue] = useState('');
-  const [visible, setVisible] = useState(false);
+  const [pokemonVisible, setPokemonVisible] = useState(false);
+  const [filterVisible, setFilterVisible] = useState(false);
   const { pokemons } = useSelector(state => state.PokemonReducer);
   const dispatch = useDispatch();
 
@@ -70,7 +72,7 @@ export const Main = () => {
   };
 
   const renderIt = ({ item }: ItemRenderProps) => {
-    return <PokemonCard pokemon={item} activeModal={setVisible} />;
+    return <PokemonCard pokemon={item} activeModal={setPokemonVisible} />;
   };
 
   const renderFooter = () => {
@@ -95,7 +97,7 @@ export const Main = () => {
         value={searchValue}
         onChangeText={value => search(value)}
       />
-      <Filter>
+      <Filter onPress={() => setFilterVisible(true)}>
         <Text>Filter</Text>
       </Filter>
       <FlatList
@@ -109,7 +111,8 @@ export const Main = () => {
         ListFooterComponent={renderFooter}
         keyExtractor={item => item.id.toString()}
       />
-      <PokemonModal visible={visible} setIsVisible={setVisible} />
+      <PokemonModal visible={pokemonVisible} setIsVisible={setPokemonVisible} />
+      <FilterModal visible={filterVisible} setVisible={setFilterVisible} />
     </Background>
   );
 };
