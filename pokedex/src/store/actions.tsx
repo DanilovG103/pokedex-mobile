@@ -43,3 +43,7 @@ export const getPokemon = (name: string) => async (dispatch: Dispatch) => {
 export const setPokemon = (pokemon: PokemonTypes) => (dispatch: Dispatch) => {
   dispatch({ type: 'SET_POKEMON', payload: pokemon });
 };
+
+export const clearState = () => (dispatch: Dispatch) => {
+  dispatch({ type: 'CLEAR_POKEMON_STATE' });
+};
