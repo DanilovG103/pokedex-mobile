@@ -5,6 +5,7 @@ import {
   TextInput,
   FlatList,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -32,7 +33,7 @@ const Title = styled(Text)`
 const Search = styled(TextInput)`
   width: 100%;
   padding: 8px 15px;
-  margin: 20px 40px;
+  margin: 20px 40px 10px;
   background: ${Colors.white[1]};
   border-radius: 40px;
   color: ${Colors.dark};
@@ -43,6 +44,14 @@ const Search = styled(TextInput)`
 const Footer = styled(View)`
   margin-top: 5px;
   align-items: center;
+`;
+
+const Filter = styled(TouchableOpacity)`
+  background-color: ${Colors.white[1]};
+  padding: 4px 25px;
+  border-radius: 11px;
+  margin-bottom: 5px;
+  align-self: flex-start;
 `;
 
 export const Main = () => {
@@ -86,6 +95,9 @@ export const Main = () => {
         value={searchValue}
         onChangeText={value => search(value)}
       />
+      <Filter>
+        <Text>Filter</Text>
+      </Filter>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={pokemons.filter(item =>
