@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import styled from 'styled-components';
-import { switchProp } from 'styled-tools';
-import { Colors, typeColors } from '../theme/colors';
 import { useDispatch } from 'react-redux';
+import { Colors } from '../theme/colors';
 import { getPokemon } from '../store/actions';
 import { PokemonTypes } from '../../api/types';
+import { TypeBlock } from './TypeBlock';
 
 const Card = styled(TouchableOpacity)`
   align-items: center;
@@ -50,14 +50,6 @@ const StatsTitle = styled(Text)`
   color: ${Colors.gray};
   font-size: 12px;
   line-height: 14px;
-`;
-
-const TypeBlock = styled(View)<{ typeColor: string }>`
-  padding: 0 10px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 11px;
-  background-color: ${switchProp('typeColor', typeColors)};
 `;
 
 const TypeTitle = styled(StatsTitle)`
@@ -112,7 +104,7 @@ export const PokemonCard = ({ pokemon, activeModal }: Props) => {
         </Wrapper>
         <Wrapper width={120}>
           {pokemon.types.map(el => (
-            <TypeBlock typeColor={el.type.name}>
+            <TypeBlock type={el.type.name}>
               <TypeTitle>{el.type.name} </TypeTitle>
             </TypeBlock>
           ))}

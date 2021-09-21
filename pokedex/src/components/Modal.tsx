@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Colors, typeColors } from '../theme/colors';
-import { switchProp } from 'styled-tools';
+import { Colors } from '../theme/colors';
 import { CloseIcon } from '../assets/images/icons/CloseIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { clearState, setPokemon } from '../store/actions';
+import { TypeBlock } from './TypeBlock';
 
 interface Props {
   visible: boolean;
@@ -54,15 +54,6 @@ const YellowCircle = styled(View)`
 const Experience = styled(Text)`
   color: ${Colors.white[1]};
   font-size: 16px;
-`;
-
-const TypesBlock = styled(View)<{ typeColor: string }>`
-  margin-left: 5px;
-  padding: 0 10px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 11px;
-  background-color: ${switchProp('typeColor', typeColors)};
 `;
 
 const Types = styled(Text)`
@@ -191,9 +182,9 @@ export const PokemonModal = ({ visible, setIsVisible }: Props) => {
             </YellowCircle>
             <TypesRow>
               {pokemon?.types?.map(el => (
-                <TypesBlock typeColor={el.type.name}>
+                <TypeBlock type={el.type.name}>
                   <Types>{el.type.name}</Types>
-                </TypesBlock>
+                </TypeBlock>
               ))}
             </TypesRow>
           </View>
