@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, Image } from 'react-native';
 import styled from 'styled-components';
 import { Colors } from '../src/theme/colors';
 import { useDispatch, useSelector } from 'react-redux';
@@ -58,11 +58,16 @@ export const Legendaries = () => {
     setPagination(prevState => prevState + 9);
   };
 
-  console.log(legendariesPokemons);
   const renderPokemons = ({ item }: ItemRenderProps) => {
     return (
       <>
         <Name>{item.name}</Name>
+        <Image
+          source={{
+            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png`,
+          }}
+          style={{ width: 250, height: 250 }}
+        />
         <Description>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla sunt
           dolorem, rerum soluta ipsam neque, saepe ea doloremque nesciunt, cum
@@ -70,20 +75,12 @@ export const Legendaries = () => {
         </Description>
         <Row>
           <StatsBlock>
-            <Description>Health points</Description>
-            <Description>100000</Description>
-            <Description>Experience</Description>
-            <Description>100000</Description>
-            <Description>Attack</Description>
-            <Description>100000</Description>
-          </StatsBlock>
-          <StatsBlock>
-            <Description>Defence</Description>
-            <Description>100000</Description>
-            <Description>Special Attack</Description>
-            <Description>100000</Description>
-            <Description>Special Defence</Description>
-            <Description>100000</Description>
+            {item.stats.map(el => (
+              <>
+                <Description>{el.stat.name}</Description>
+                <Description>{el.base_stat}</Description>
+              </>
+            ))}
           </StatsBlock>
         </Row>
       </>
