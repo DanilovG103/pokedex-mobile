@@ -79,7 +79,9 @@ export default function PokemonReducer(state = initialState, action) {
     case 'SET_SELECTED_TYPES':
       return {
         ...state,
-        selectedTypes: [...new Set(state.selectedTypes.concat(action.payload))],
+        selectedTypes: state.selectedTypes
+          .filter(item => item !== action.payload)
+          .concat(action.payload),
       };
     default:
       return state;

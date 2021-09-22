@@ -41,3 +41,7 @@ export type PokemonTypes = {
 export interface ItemRenderProps {
   item: PokemonTypes;
 }
+
+export interface TypeRenderProps {
+  item: Result;
+}

@@ -60,7 +60,9 @@ export const Main = () => {
   const [searchValue, setSearchValue] = useState('');
   const [pokemonVisible, setPokemonVisible] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
-  const { pokemons } = useSelector(state => state.PokemonReducer);
+  const { pokemons, selectedTypes } = useSelector(
+    state => state.PokemonReducer,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
