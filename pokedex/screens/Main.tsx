@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import { Colors } from '../src/theme/colors';
 import { PokemonModal } from '../src/components/Modal';
 import { PokemonCard } from '../src/components/PokemonCard';
-import { getPokemonsList } from '../src/store/actions';
+import { getPokemonsList, getTypes } from '../src/store/actions';
 import { ItemRenderProps } from '../api/types';
 import { FilterModal } from '../src/components/FilterModal';
 
@@ -88,6 +88,11 @@ export const Main = () => {
     setPagination(prevState => prevState + 1);
   };
 
+  const openFilterModal = () => {
+    setFilterVisible(true);
+    dispatch(getTypes());
+  };
+
   return (
     <Background>
       <Title>800 Pokemons for you to choose your favorite</Title>
@@ -97,7 +102,7 @@ export const Main = () => {
         value={searchValue}
         onChangeText={value => search(value)}
       />
-      <Filter onPress={() => setFilterVisible(true)}>
+      <Filter onPress={openFilterModal}>
         <Text>Filter</Text>
       </Filter>
       <FlatList

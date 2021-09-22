@@ -40,6 +40,21 @@ export const getPokemon = (name: string) => async (dispatch: Dispatch) => {
   }
 };
 
+export const getTypes = () => async (dispatch: Dispatch) => {
+  try {
+    dispatch({ type: 'GET_TYPES_LOADING' });
+
+    const response = await axios.get('https://pokeapi.co/api/v2/type');
+
+    dispatch({
+      type: 'GET_TYPES_SUCCESS',
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({ type: 'GET_TYPES_ERROR' });
+  }
+};
+
 export const setPokemon = (pokemon: PokemonTypes) => (dispatch: Dispatch) => {
   dispatch({ type: 'SET_POKEMON', payload: pokemon });
 };
@@ -50,4 +65,8 @@ export const clearState = () => (dispatch: Dispatch) => {
 
 export const clearComparedPokemons = () => (dispatch: Dispatch) => {
   dispatch({ type: 'CLEAR_COMPARED_POKEMONS' });
+};
+
+export const setSelectedValues = (type: string) => (dispatch: Dispatch) => {
+  dispatch({ type: 'SET_SELECTED_TYPES', payload: type });
 };
