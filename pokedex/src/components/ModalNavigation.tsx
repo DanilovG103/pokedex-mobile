@@ -20,6 +20,11 @@ const Background = styled(View)`
 const Title = styled(Text)`
   font-size: 24px;
   color: ${Colors.dark};
+  text-align: center;
+`;
+
+const Navigate = styled(TouchableOpacity)`
+  width: 100%;
 `;
 
 interface Props {
@@ -40,15 +45,15 @@ export const ModalNavigation = ({ visible, setVisible, navigation }: Props) => {
       style={{ position: 'absolute', top: -20, right: -18, width: '100%' }}>
       <Background>
         <Logo />
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <Navigate onPress={() => navigation.navigate('Home')}>
           <Title>Home</Title>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Legendaries')}>
+        </Navigate>
+        <Navigate onPress={() => navigation.navigate('Legendaries')}>
           <Title>Legendaries</Title>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Compare')}>
+        </Navigate>
+        <Navigate onPress={() => navigation.navigate('Compare')}>
           <Title>Compare</Title>
-        </TouchableOpacity>
+        </Navigate>
       </Background>
     </Modal>
   );
