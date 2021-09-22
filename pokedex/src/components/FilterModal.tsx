@@ -25,8 +25,8 @@ const Block = styled(View)`
 
 const Close = styled(TouchableOpacity)`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
 `;
 
 const Line = styled(View)`
