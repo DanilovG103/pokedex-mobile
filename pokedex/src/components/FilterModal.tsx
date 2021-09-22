@@ -1,12 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import {
-  Modal,
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  TextInput,
-} from 'react-native';
+import { Modal, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import styled from 'styled-components';
 import { Colors } from '../theme/colors';
 import { CloseIcon } from '../assets/images/icons/CloseIcon';
@@ -14,6 +7,7 @@ import { CheckBox } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedValues } from '../store/actions';
 import { TypeRenderProps } from '../../api/types';
+import { ExpAttFilter } from './ExpAttFilter';
 interface Props {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
@@ -51,30 +45,6 @@ const CheckBoxWrapper = styled(View)`
   width: 35%;
   align-items: flex-start;
   justify-content: center;
-`;
-
-const ExpAttBlock = styled(View)`
-  background-color: ${Colors.white[4]};
-  border-radius: 8px;
-  margin: 15px;
-  padding: 10px;
-  flex-direction: row;
-  justify-content: space-around;
-`;
-
-const Input = styled(TextInput)`
-  background-color: ${Colors.white[2]};
-  color: ${Colors.black};
-  border-radius: 11px;
-  padding: 0px 15px;
-  margin-top: 3px;
-`;
-
-const Button = styled(TouchableOpacity)`
-  background-color: ${Colors.green};
-  padding: 2px 15px;
-  border-radius: 11px;
-  margin-top: 5px;
 `;
 
 export const FilterModal = ({ visible, setVisible }: Props) => {
@@ -120,50 +90,10 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
           />
           <Line />
           <Title>Experience</Title>
-          <ExpAttBlock>
-            <View>
-              <Text>From</Text>
-              <Input
-                placeholder="0"
-                placeholderTextColor="#00000086"
-                keyboardType="number-pad"
-              />
-            </View>
-            <View>
-              <Text>To</Text>
-              <Input
-                placeholder="0"
-                placeholderTextColor="#00000086"
-                keyboardType="number-pad"
-              />
-              <Button>
-                <Text>Apply</Text>
-              </Button>
-            </View>
-          </ExpAttBlock>
+          <ExpAttFilter />
           <Line />
           <Title>Attack</Title>
-          <ExpAttBlock>
-            <View>
-              <Text>From</Text>
-              <Input
-                placeholder="0"
-                placeholderTextColor="#00000086"
-                keyboardType="number-pad"
-              />
-            </View>
-            <View>
-              <Text>To</Text>
-              <Input
-                placeholder="0"
-                placeholderTextColor="#00000086"
-                keyboardType="number-pad"
-              />
-              <Button>
-                <Text>Apply</Text>
-              </Button>
-            </View>
-          </ExpAttBlock>
+          <ExpAttFilter />
           <Close onPress={() => setVisible(false)}>
             <CloseIcon />
           </Close>
