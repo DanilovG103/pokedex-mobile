@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Modal, View } from 'react-native';
+import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import { Colors } from '../theme/colors';
+import { CloseIcon } from '../assets/images/icons/CloseIcon';
 
 interface Props {
   visible: boolean;
@@ -19,11 +20,28 @@ const Block = styled(View)`
   border-bottom-right-radius: 16px;
 `;
 
+const Close = styled(TouchableOpacity)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`;
+
+const Title = styled(Text)`
+  font-size: 23px;
+`;
+
 export const FilterModal = ({ visible, setVisible }: Props) => {
   return (
-    <Modal visible={visible} transparent={true}>
+    <Modal visible={visible} transparent={true} animationType="fade">
       <Overlay>
-        <Block />
+        <Block>
+          <Title>Type</Title>
+          <Title>Experience</Title>
+          <Title>Attack</Title>
+          <Close onPress={() => setVisible(false)}>
+            <CloseIcon />
+          </Close>
+        </Block>
       </Overlay>
     </Modal>
   );
