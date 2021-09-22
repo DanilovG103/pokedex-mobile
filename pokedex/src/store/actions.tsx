@@ -23,6 +23,28 @@ export const getPokemonsList = (page: number) => async (dispatch: Dispatch) => {
   }
 };
 
+export const getLegendariesPokemonsList =
+  (page: number) => async (dispatch: Dispatch) => {
+    try {
+      dispatch({ type: 'GET_L_POKEMON_LOADING' });
+
+      const offset = page * 9;
+      const response = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=9`,
+      );
+
+      const datas = response.data.results.map(el =>
+        fetch(el.url).then(res => res.json()),
+      );
+
+      const pokemons = await Promise.all(datas);
+
+      dispatch({ type: 'GET_L_POKEMON_SUCCESS', payload: pokemons });
+    } catch (error) {
+      dispatch({ type: 'GET_L_POKEMON_ERROR' });
+    }
+  };
+
 export const getPokemon = (name: string) => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: 'GET_POKEMON_LOADING' });
