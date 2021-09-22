@@ -28,9 +28,8 @@ export const getLegendariesPokemonsList =
     try {
       dispatch({ type: 'GET_L_POKEMON_LOADING' });
 
-      const offset = page * 9;
       const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=9`,
+        `https://pokeapi.co/api/v2/pokemon/?offset=${page}&limit=9`,
       );
 
       const datas = response.data.results.map(el =>

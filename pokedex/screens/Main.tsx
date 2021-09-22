@@ -15,6 +15,7 @@ import { PokemonCard } from '../src/components/PokemonCard';
 import { getPokemonsList, getTypes } from '../src/store/actions';
 import { ItemRenderProps } from '../api/types';
 import { FilterModal } from '../src/components/FilterModal';
+import { FlatListFooter } from '../src/components/Footer';
 
 const Background = styled(View)`
   background-color: ${Colors.white[0]};
@@ -40,11 +41,6 @@ const Search = styled(TextInput)`
   color: ${Colors.dark};
   font-size: 12px;
   line-height: 15px;
-`;
-
-const Footer = styled(View)`
-  margin-top: 5px;
-  align-items: center;
 `;
 
 const Filter = styled(TouchableOpacity)`
@@ -77,14 +73,6 @@ export const Main = () => {
     return <PokemonCard pokemon={item} activeModal={setPokemonVisible} />;
   };
 
-  const renderFooter = () => {
-    return (
-      <Footer>
-        <ActivityIndicator size="large" />
-      </Footer>
-    );
-  };
-
   const search = (value: string) => {
     setSearchValue(value);
     setPagination(prevState => prevState + 1);
@@ -115,7 +103,7 @@ export const Main = () => {
         renderItem={renderIt}
         onEndReached={loadMore}
         onEndReachedThreshold={1}
-        ListFooterComponent={renderFooter}
+        ListFooterComponent={FlatListFooter}
         keyExtractor={item => item.id.toString()}
       />
       <PokemonModal visible={pokemonVisible} setIsVisible={setPokemonVisible} />
