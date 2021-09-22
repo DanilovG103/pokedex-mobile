@@ -12,7 +12,7 @@ const Background = styled(View)`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   width: 100%;
-  height: 300px;
+  height: 350px;
   align-items: center;
   justify-content: space-around;
 `;
@@ -25,6 +25,11 @@ const Title = styled(Text)`
 
 const Navigate = styled(TouchableOpacity)`
   width: 100%;
+`;
+
+const PokeLogo = styled(Logo)`
+  margin-top: 20px;
+  transform: scale(2);
 `;
 
 interface Props {
@@ -44,7 +49,7 @@ export const ModalNavigation = ({ visible, setVisible, navigation }: Props) => {
       useNativeDriver
       style={{ position: 'absolute', top: -20, right: -18, width: '100%' }}>
       <Background>
-        <Logo />
+        <PokeLogo />
         <Navigate onPress={() => navigation.navigate('Home')}>
           <Title>Home</Title>
         </Navigate>
