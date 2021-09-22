@@ -2,38 +2,20 @@ import React from 'react';
 import { Main } from '../../screens/Main';
 import { Legendaries } from '../../screens/Legendaries';
 import { Compare } from '../../screens/Compare';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Header } from './Header';
-import { Colors } from '../theme/colors';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 export const Navs = () => {
   return (
-    <Drawer.Navigator
+    <Stack.Navigator
       screenOptions={{
-        drawerPosition: 'right',
-        drawerStyle: {
-          backgroundColor: Colors.yellow1,
-          borderBottomLeftRadius: 10,
-          borderBottomRightRadius: 10,
-          width: '100%',
-          height: 300,
-          paddingHorizontal: 100,
-        },
-        drawerActiveBackgroundColor: 'transparent',
-        drawerLabelStyle: {
-          fontSize: 24,
-          color: Colors.black,
-          marginRight: -50,
-        },
-        header: ({ navigation }) => {
-          return <Header open={navigation.openDrawer} />;
-        },
+        header: ({ navigation }) => <Header navigation={navigation} />,
       }}>
-      <Drawer.Screen name="Home" component={Main} />
-      <Drawer.Screen name="Legendaries" component={Legendaries} />
-      <Drawer.Screen name="Compare" component={Compare} />
-    </Drawer.Navigator>
+      <Stack.Screen name="Home" component={Main} />
+      <Stack.Screen name="Legendaries" component={Legendaries} />
+      <Stack.Screen name="Compare" component={Compare} />
+    </Stack.Navigator>
   );
 };
