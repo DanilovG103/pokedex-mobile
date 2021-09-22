@@ -14,11 +14,6 @@ interface Props {
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-const Overlay = styled(View)`
-  background-color: rgba(0, 0, 0, 0.7);
-  flex: 1;
-`;
-
 const Block = styled(View)`
   background-color: ${Colors.yellow1};
   padding: 25px;
@@ -84,29 +79,32 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
       animationIn="slideInDown"
       animationOut="slideOutUp"
       useNativeDriver
-      style={{ position: 'absolute', top: -20, right: -18, width: '100%' }}>
-      <Overlay>
-        <Block>
-          <Title>Type</Title>
-          <FlatList
-            data={types.filter(
-              item => item.name !== 'unknown' && item.name !== 'shadow',
-            )}
-            numColumns={3}
-            keyExtractor={item => item.name}
-            renderItem={renderCheckBox}
-          />
-          <Line />
-          <Title>Experience</Title>
-          <ExpAttFilter />
-          <Line />
-          <Title>Attack</Title>
-          <ExpAttFilter />
-          <Close onPress={() => setVisible(false)}>
-            <CloseIcon />
-          </Close>
-        </Block>
-      </Overlay>
+      style={{
+        position: 'absolute',
+        top: -20,
+        right: -18,
+        width: '100%',
+      }}>
+      <Block>
+        <Title>Type</Title>
+        <FlatList
+          data={types.filter(
+            item => item.name !== 'unknown' && item.name !== 'shadow',
+          )}
+          numColumns={3}
+          keyExtractor={item => item.name}
+          renderItem={renderCheckBox}
+        />
+        <Line />
+        <Title>Experience</Title>
+        <ExpAttFilter />
+        <Line />
+        <Title>Attack</Title>
+        <ExpAttFilter />
+        <Close onPress={() => setVisible(false)}>
+          <CloseIcon />
+        </Close>
+      </Block>
     </Modal>
   );
 };
