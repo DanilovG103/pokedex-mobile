@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Modal, View, Text, TouchableOpacity, FlatList } from 'react-native';
+import Modal from 'react-native-modal';
+import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import styled from 'styled-components';
 import { Colors } from '../theme/colors';
 import { CloseIcon } from '../assets/images/icons/CloseIcon';
@@ -76,7 +77,14 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
   };
 
   return (
-    <Modal visible={visible} transparent={true} animationType="fade">
+    <Modal
+      isVisible={visible}
+      onBackButtonPress={() => setVisible(false)}
+      onBackdropPress={() => setVisible(false)}
+      animationIn="slideInDown"
+      animationOut="slideOutUp"
+      useNativeDriver
+      style={{ position: 'absolute', top: -20, right: -18, width: '100%' }}>
       <Overlay>
         <Block>
           <Title>Type</Title>
