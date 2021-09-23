@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import styled from 'styled-components';
 import { Colors } from '../theme/colors';
-import { Logo } from '../assets/images/icons/Logo';
+import { Logo } from '../../resources/assets/images/icons/Logo';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ParamListBase } from '@react-navigation/routers';
 

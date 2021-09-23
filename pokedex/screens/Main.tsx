@@ -47,7 +47,7 @@ const Filter = styled(TouchableOpacity)`
   background-color: ${Colors.white[1]};
   padding: 4px 25px;
   border-radius: 11px;
-  margin-bottom: 5px;
+  margin-bottom: 12px;
   align-self: flex-start;
 `;
 
@@ -60,10 +60,13 @@ export const Main = () => {
     state => state.PokemonReducer,
   );
   const dispatch = useDispatch();
+  const loading = pagination < 898;
 
   useEffect(() => {
-    dispatch(getPokemonsList(pagination));
-  }, [pagination, dispatch]);
+    if (loading) {
+      dispatch(getPokemonsList(pagination));
+    }
+  }, [pagination, dispatch, loading]);
 
   const loadMore = () => {
     setPagination(prevState => prevState + 1);
@@ -103,7 +106,7 @@ export const Main = () => {
         renderItem={renderIt}
         onEndReached={loadMore}
         onEndReachedThreshold={1}
-        ListFooterComponent={FlatListFooter}
+        ListFooterComponent={loading ? FlatListFooter : null}
         keyExtractor={item => item.id.toString()}
       />
       <PokemonModal visible={pokemonVisible} setIsVisible={setPokemonVisible} />

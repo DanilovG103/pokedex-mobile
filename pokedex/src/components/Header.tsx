@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
-import { Logo } from '../assets/images/icons/Logo';
+import { Logo } from '../../resources/assets/images/icons/Logo';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../theme/colors';
 import { ModalNavigation } from './ModalNavigation';

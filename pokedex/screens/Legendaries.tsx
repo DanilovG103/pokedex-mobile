@@ -6,28 +6,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getLegendariesPokemonsList } from '../src/store/actions';
 import { FlatListFooter } from '../src/components/Footer';
 import { ItemRenderProps } from '../api/types';
+import { Fonts } from '../src/theme/fonts';
 
 const Wrapper = styled(View)`
   flex: 1;
   background-color: ${Colors.white[0]};
-  padding: 15px;
+  padding: 15px 15px 0;
 `;
 
 const Title = styled(Text)`
+  font-family: ${Fonts.regular};
   text-align: center;
   font-size: 36px;
   color: ${Colors.dark};
 `;
 
 const Line = styled(View)`
-  margin-top: 10px;
   height: 1px;
+  margin: 10px;
   width: 100%;
+  align-self: center;
   background-color: ${Colors.black};
 `;
 
 const Name = styled(Text)`
-  font-size: 40px;
+  font-size: 30px;
+  text-align: center;
+  text-transform: capitalize;
 `;
 
 const Description = styled(Text)`
@@ -36,13 +41,19 @@ const Description = styled(Text)`
 `;
 
 const StatsBlock = styled(View)`
-  align-items: flex-start;
+  align-items: center;
   flex: 1;
 `;
 
 const Row = styled(View)`
   margin: 15px 0;
   flex-direction: row;
+`;
+
+const PokeImage = styled(Image)`
+  align-self: center;
+  width: 250px;
+  height: 250px;
 `;
 
 export const Legendaries = () => {
@@ -62,17 +73,11 @@ export const Legendaries = () => {
     return (
       <>
         <Name>{item.name}</Name>
-        <Image
+        <PokeImage
           source={{
             uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png`,
           }}
-          style={{ width: 250, height: 250 }}
         />
-        <Description>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla sunt
-          dolorem, rerum soluta ipsam neque, saepe ea doloremque nesciunt, cum
-          error ratione adipisci labore tempora corrupti? Nobis, dolorem.
-        </Description>
         <Row>
           <StatsBlock>
             {item.stats.map(el => (
@@ -83,6 +88,7 @@ export const Legendaries = () => {
             ))}
           </StatsBlock>
         </Row>
+        <Line />
       </>
     );
   };
@@ -90,14 +96,13 @@ export const Legendaries = () => {
   return (
     <Wrapper>
       <Title>Legendaries</Title>
-      <Line />
       <FlatList
         data={legendariesPokemons}
         renderItem={renderPokemons}
         onEndReached={loadMore}
         ListFooterComponent={FlatListFooter}
         onEndReachedThreshold={1}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={() => Math.random().toString()}
       />
     </Wrapper>
   );

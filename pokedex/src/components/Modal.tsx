@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Colors } from '../theme/colors';
-import { CloseIcon } from '../assets/images/icons/CloseIcon';
+import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { clearState, setPokemon } from '../store/actions';
 import { TypeBlock } from './TypeBlock';

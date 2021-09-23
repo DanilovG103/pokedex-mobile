@@ -3,7 +3,7 @@ import Modal from 'react-native-modal';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import styled from 'styled-components';
 import { Colors } from '../theme/colors';
-import { CloseIcon } from '../assets/images/icons/CloseIcon';
+import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
 import { CheckBox } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedValues } from '../store/actions';
