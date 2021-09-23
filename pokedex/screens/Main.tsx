@@ -63,14 +63,6 @@ export const Main = () => {
   const dispatch = useDispatch();
   const loading = pagination < 898;
 
-  console.log(
-    selectedTypes,
-    experienceFrom,
-    experienceTo,
-    attackFrom,
-    attackTo,
-  );
-
   useEffect(() => {
     if (loading) {
       dispatch(getPokemonsList(pagination));
