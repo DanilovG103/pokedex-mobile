@@ -10,11 +10,11 @@ const ExpAttBlock = styled(View)`
   border-radius: 8px;
   margin: 15px;
   padding: 10px;
-  flex-direction: row;
   justify-content: space-around;
 `;
 
 const Input = styled(TextInput)`
+  width: 30%;
   background-color: ${Colors.white[2]};
   color: ${Colors.black};
   border-radius: 11px;
@@ -24,9 +24,32 @@ const Input = styled(TextInput)`
 
 const Button = styled(TouchableOpacity)`
   background-color: ${Colors.green};
+  align-self: flex-end;
   padding: 2px 15px;
   border-radius: 11px;
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-right: 30px;
+`;
+
+const Line = styled(View)`
+  background-color: ${Colors.black};
+  width: 10%;
+  margin: 0 15px;
+  height: 2px;
+`;
+
+const TextRow = styled(View)`
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
+const InputRow = styled(TextRow)`
+  align-items: center;
+  justify-content: center;
+`;
+
+const Title = styled(Text)`
+  margin-right: 45px;
 `;
 
 interface Props {
@@ -49,8 +72,11 @@ export const ExpAttFilter = ({ filterType }: Props) => {
 
   return (
     <ExpAttBlock>
-      <View>
-        <Text>From</Text>
+      <TextRow>
+        <Title>From</Title>
+        <Title>To</Title>
+      </TextRow>
+      <InputRow>
         <Input
           placeholder={
             filterType === 'exp'
@@ -61,9 +87,7 @@ export const ExpAttFilter = ({ filterType }: Props) => {
           keyboardType="number-pad"
           onChangeText={value => setFrom(value)}
         />
-      </View>
-      <View>
-        <Text>To</Text>
+        <Line />
         <Input
           placeholder={
             filterType === 'exp' ? experienceTo.toString() : attackTo.toString()
@@ -72,10 +96,10 @@ export const ExpAttFilter = ({ filterType }: Props) => {
           keyboardType="number-pad"
           onChangeText={value => setTo(value)}
         />
-        <Button onPress={() => setFilterValues(+from, +to)}>
-          <Text>Apply</Text>
-        </Button>
-      </View>
+      </InputRow>
+      <Button onPress={() => setFilterValues(+from, +to)}>
+        <Text>Apply</Text>
+      </Button>
     </ExpAttBlock>
   );
 };
