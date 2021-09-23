@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import Modal from 'react-native-modal';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { Colors } from '../theme/colors';
 import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
 import { CheckBox } from 'react-native-elements';
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const Block = styled(View)`
-  background-color: ${Colors.yellow1};
+  background-color: ${props => props.theme.header};
   padding: 25px;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
@@ -35,6 +35,7 @@ const Line = styled(View)<{ clr?: string }>`
 
 const Title = styled(Text)`
   font-size: 23px;
+  color: ${props => props.theme.fontColor};
 `;
 
 const CheckBoxWrapper = styled(View)`
@@ -46,6 +47,7 @@ const CheckBoxWrapper = styled(View)`
 export const FilterModal = ({ visible, setVisible }: Props) => {
   const { types, selectedTypes } = useSelector(state => state.PokemonReducer);
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const action = (name: string) => {
     dispatch(setSelectedValues(name));
@@ -65,7 +67,11 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
             paddingHorizontal: 0,
             margin: 0,
           }}
-          textStyle={{ fontSize: 12, textTransform: 'capitalize' }}
+          textStyle={{
+            fontSize: 12,
+            textTransform: 'capitalize',
+            color: theme.type === 'dark' ? Colors.white[4] : Colors.dark,
+          }}
         />
       </CheckBoxWrapper>
     );
@@ -102,7 +108,7 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
         <Title>Attack</Title>
         <ExpAttFilter />
         <Close onPress={() => setVisible(false)}>
-          <CloseIcon />
+          <CloseIcon darkTheme={theme.type === 'dark'} />
         </Close>
       </Block>
     </Modal>
