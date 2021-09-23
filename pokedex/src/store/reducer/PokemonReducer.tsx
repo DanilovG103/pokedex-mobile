@@ -6,7 +6,6 @@ const initialState = {
   pokemon: null,
   comparedPokemons: [],
   types: [],
-  selectedTypes: [],
 };
 
 export default function PokemonReducer(state = initialState, action) {
@@ -76,13 +75,6 @@ export default function PokemonReducer(state = initialState, action) {
         ...state,
         loading: false,
         errorMessage: 'An error occured',
-      };
-    case 'SET_SELECTED_TYPES':
-      return {
-        ...state,
-        selectedTypes: state.selectedTypes
-          .filter(item => item !== action.payload)
-          .concat(action.payload),
       };
     case 'GET_L_POKEMON_LOADING':
       return {

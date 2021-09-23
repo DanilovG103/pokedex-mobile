@@ -57,11 +57,19 @@ export const Main = () => {
   const [searchValue, setSearchValue] = useState('');
   const [pokemonVisible, setPokemonVisible] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
-  const { pokemons, selectedTypes } = useSelector(
-    state => state.PokemonReducer,
-  );
+  const { pokemons } = useSelector(state => state.PokemonReducer);
+  const { selectedTypes, experienceFrom, experienceTo, attackFrom, attackTo } =
+    useSelector(state => state.FilterReducer);
   const dispatch = useDispatch();
   const loading = pagination < 898;
+
+  console.log(
+    selectedTypes,
+    experienceFrom,
+    experienceTo,
+    attackFrom,
+    attackTo,
+  );
 
   useEffect(() => {
     if (loading) {

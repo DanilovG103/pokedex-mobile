@@ -87,3 +87,12 @@ export const clearComparedPokemons = () => (dispatch: Dispatch) => {
 export const setSelectedValues = (type: string) => (dispatch: Dispatch) => {
   dispatch({ type: 'SET_SELECTED_TYPES', payload: type });
 };
+
+export const setExperience =
+  (from: number, to: number) => (dispatch: Dispatch) => {
+    dispatch({ type: 'SET_EXPERIENCE', payload: { from, to } });
+  };
+
+export const setAttack = (from: number, to: number) => (dispatch: Dispatch) => {
+  dispatch({ type: 'SET_ATTACK', payload: { from, to } });
+};

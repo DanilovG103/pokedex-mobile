@@ -45,7 +45,8 @@ const CheckBoxWrapper = styled(View)`
 `;
 
 export const FilterModal = ({ visible, setVisible }: Props) => {
-  const { types, selectedTypes } = useSelector(state => state.PokemonReducer);
+  const { types } = useSelector(state => state.PokemonReducer);
+  const { selectedTypes } = useSelector(state => state.FilterReducer);
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -103,10 +104,10 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
         />
         <Line />
         <Title>Experience</Title>
-        <ExpAttFilter />
+        <ExpAttFilter filterType="exp" />
         <Line />
         <Title>Attack</Title>
-        <ExpAttFilter />
+        <ExpAttFilter filterType="attack" />
         <Close onPress={() => setVisible(false)}>
           <CloseIcon darkTheme={theme.type === 'dark'} />
         </Close>
