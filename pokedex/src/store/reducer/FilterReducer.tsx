@@ -20,14 +20,18 @@ export default function FilterReducer(state = initialState, action) {
         ...state,
         experienceFrom: action.payload.from,
         experienceTo:
-          action.payload.to < action.payload.from ? 100000 : action.payload.to,
+          action.payload.to < action.payload.from + 1
+            ? 100000
+            : action.payload.to,
       };
     case 'SET_ATTACK':
       return {
         ...state,
         attackFrom: action.payload.from,
         attackTo:
-          action.payload.to < action.payload.from ? 100000 : action.payload.to,
+          action.payload.to < action.payload.from + 1
+            ? 100000
+            : action.payload.to,
       };
     default:
       return state;

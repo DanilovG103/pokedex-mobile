@@ -63,6 +63,19 @@ export const Main = () => {
   const dispatch = useDispatch();
   const loading = pagination < 898;
 
+  const filteredPokemons = pokemons
+    .filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
+    .filter(
+      item =>
+        item.base_experience >= experienceFrom &&
+        item.base_experience < experienceTo,
+    )
+    .filter(
+      item =>
+        item.stats[1].base_stat >= attackFrom &&
+        item.stats[1].base_stat < attackTo,
+    );
+
   useEffect(() => {
     if (loading) {
       dispatch(getPokemonsList(pagination));
@@ -101,9 +114,7 @@ export const Main = () => {
       </Filter>
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={pokemons.filter(item =>
-          item.name.toLowerCase().includes(searchValue.toLowerCase()),
-        )}
+        data={filteredPokemons}
         renderItem={renderIt}
         onEndReached={loadMore}
         onEndReachedThreshold={1}
