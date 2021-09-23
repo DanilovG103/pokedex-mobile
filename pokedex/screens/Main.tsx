@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   FlatList,
-  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,7 +18,7 @@ import { FlatListFooter } from '../src/components/Footer';
 import { Fonts } from '../src/theme/fonts';
 
 const Background = styled(View)`
-  background-color: ${Colors.white[0]};
+  background-color: ${props => props.theme.body};
   align-items: center;
   justify-content: center;
   flex: 1;
@@ -27,7 +26,7 @@ const Background = styled(View)`
 `;
 
 const Title = styled(Text)`
-  color: ${Colors.black};
+  color: ${props => props.theme.fontColor};
   font-size: 24px;
   line-height: 28px;
   text-align: center;

@@ -13,7 +13,7 @@ interface Props {
 const PokemonCard = styled(View)`
   width: ${Dimensions.get('window').width - 100}px;
   margin: 8px;
-  border: 1px solid ${Colors.black};
+  border: 1px solid ${props => props.theme.line};
   border-radius: 11px;
   padding: 0 5px;
 `;
@@ -27,6 +27,7 @@ const PokemonImage = styled(Image)`
 
 const PokemonName = styled(Text)`
   text-align: center;
+  color: ${props => props.theme.fontColor};
   font-family: ${Fonts.bold};
   text-transform: capitalize;
   font-size: 22px;
@@ -51,14 +52,14 @@ const CategoryTitle = styled(Text)`
   font-size: 18px;
   text-align: center;
   font-family: ${Fonts.bold};
-  color: ${Colors.dark};
+  color: ${props => props.theme.fontColor};
 `;
 
 const StatName = styled(Text)`
   text-transform: capitalize;
   font-size: 17px;
   font-family: ${Fonts.regular};
-  color: ${Colors.dark};
+  color: ${props => props.theme.fontColor};
 `;
 
 export const ComparingCard = ({ pokemon }: Props) => {
@@ -81,7 +82,7 @@ export const ComparingCard = ({ pokemon }: Props) => {
       <Types>
         {pokemon.types?.map(el => (
           <TypeBlock type={el.type.name}>
-            <StatName>{el.type.name} </StatName>
+            <StatName style={{ color: '#212121' }}>{el.type.name} </StatName>
           </TypeBlock>
         ))}
       </Types>

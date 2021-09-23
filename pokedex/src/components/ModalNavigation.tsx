@@ -2,14 +2,13 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import styled from 'styled-components';
-import { Colors } from '../theme/colors';
-import { Logo } from '../../resources/assets/images/icons/Logo';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ParamListBase } from '@react-navigation/routers';
+import { Logo } from '../../resources/assets/images/icons/Logo';
 import { Fonts } from '../theme/fonts';
 
 const Background = styled(View)`
-  background-color: ${Colors.yellow1};
+  background-color: ${props => props.theme.header};
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   width: 100%;
@@ -21,7 +20,7 @@ const Background = styled(View)`
 const Title = styled(Text)`
   font-family: ${Fonts.regular};
   font-size: 24px;
-  color: ${Colors.dark};
+  color: ${props => props.theme.fontColor};
   text-align: center;
 `;
 

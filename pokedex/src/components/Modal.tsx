@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { Colors } from '../theme/colors';
 import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -18,14 +18,14 @@ interface Props {
 const PokemonInfoBlock = styled(View)`
   width: 100%;
   padding: 10px;
-  background-color: ${Colors.white[3]};
+  background-color: ${props => props.theme.modalBody};
   border-radius: 10px;
 `;
 
 const Title = styled(Text)`
   font-size: 20px;
   text-align: center;
-  color: ${Colors.dark};
+  color: ${props => props.theme.fontColor};
   font-family: ${Fonts.bold};
   text-transform: capitalize;
 `;
@@ -59,7 +59,7 @@ const TypesRow = styled(View)`
 `;
 
 const AbilitiesBlock = styled(View)`
-  background-color: ${Colors.white[1]};
+  background-color: ${props => props.theme.card};
   padding: 15px;
   margin-top: 10px;
   border-radius: 8px;
@@ -68,12 +68,14 @@ const AbilitiesBlock = styled(View)`
 const AbilitiesBlockTitle = styled(Text)`
   font-size: 24px;
   font-family: ${Fonts.regular};
+  color: ${props => props.theme.fontColor};
 `;
 
 const Ability = styled(Text)`
   text-transform: capitalize;
   font-family: ${Fonts.regular};
   font-size: 17px;
+  color: ${props => props.theme.fontColor};
 `;
 
 const Statistics = styled(AbilitiesBlock)``;
@@ -82,11 +84,13 @@ const StatisticsTitle = styled(Text)`
   font-size: 18px;
   text-transform: capitalize;
   font-family: ${Fonts.regular};
+  color: ${props => props.theme.fontColor};
 `;
 
 const StatisticsValue = styled(Text)`
   font-size: 16px;
   font-family: ${Fonts.bold};
+  color: ${props => props.theme.fontColor};
 `;
 
 const Row = styled(View)`
@@ -101,14 +105,14 @@ const Block = styled(View)`
   height: 80px;
   align-items: center;
   justify-content: center;
-  background: ${Colors.white[1]};
+  background: ${props => props.theme.card};
   border-radius: 8px;
 `;
 
 const Circle = styled(View)`
   align-items: center;
   justify-content: center;
-  border: 3px solid ${Colors.black};
+  border: 3px solid ${props => props.theme.circle};
   width: 38px;
   height: 38px;
   border-radius: 19px;
@@ -135,6 +139,7 @@ const PokeImage = styled(Image)`
 export const PokemonModal = ({ visible, setIsVisible }: Props) => {
   const { pokemon } = useSelector(state => state.PokemonReducer);
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   return (
     <Modal
@@ -145,11 +150,15 @@ export const PokemonModal = ({ visible, setIsVisible }: Props) => {
       <PokemonInfoBlock>
         <UpperRow>
           <TouchableOpacity onPress={() => setIsVisible(false)}>
-            <CloseIcon />
+            <CloseIcon darkTheme={theme.type === 'dark'} />
           </TouchableOpacity>
           <Title>{pokemon?.name}</Title>
           <TouchableOpacity onPress={() => dispatch(setPokemon(pokemon))}>
-            <Icon name="bar-chart" size={30} />
+            <Icon
+              name="bar-chart"
+              size={30}
+              color={theme.type === 'dark' ? Colors.white[1] : Colors.black}
+            />
           </TouchableOpacity>
         </UpperRow>
         <PokeImage

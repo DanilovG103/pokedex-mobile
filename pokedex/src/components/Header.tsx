@@ -3,7 +3,6 @@ import { View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import { Logo } from '../../resources/assets/images/icons/Logo';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Colors } from '../theme/colors';
 import { ModalNavigation } from './ModalNavigation';
 
 const Container = styled(View)`
@@ -11,7 +10,7 @@ const Container = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: ${Colors.yellow1};
+  background-color: ${props => props.theme.header};
 `;
 
 export const Header = ({ navigation }) => {

@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { PokemonTypes } from '../../api/types';
 import { getPokemon } from '../store/actions';
-import { Colors } from '../theme/colors';
 import { Fonts } from '../theme/fonts';
 
 const Line = styled(View)`
@@ -12,13 +11,14 @@ const Line = styled(View)`
   margin: 10px;
   width: 100%;
   align-self: center;
-  background-color: ${Colors.black};
+  background-color: ${props => props.theme.line};
 `;
 
 const Name = styled(Text)`
   font-size: 30px;
   text-align: center;
   text-transform: capitalize;
+  color: ${props => props.theme.fontColor};
   font-family: ${Fonts.regular};
   align-self: flex-start;
 `;
@@ -27,6 +27,7 @@ const Description = styled(Text)`
   font-size: 18px;
   margin: 5px 0;
   font-family: ${Fonts.regular};
+  color: ${props => props.theme.fontColor};
   text-transform: capitalize;
 `;
 

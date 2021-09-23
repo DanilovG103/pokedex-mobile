@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import styled from 'styled-components';
-import { Colors } from '../src/theme/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLegendariesPokemonsList } from '../src/store/actions';
 import { FlatListFooter } from '../src/components/Footer';
@@ -12,7 +11,7 @@ import { PokemonModal } from '../src/components/Modal';
 
 const Wrapper = styled(View)`
   flex: 1;
-  background-color: ${Colors.white[0]};
+  background-color: ${props => props.theme.body};
   padding: 15px 15px 0;
 `;
 
@@ -20,7 +19,7 @@ const Title = styled(Text)`
   font-family: ${Fonts.regular};
   text-align: center;
   font-size: 36px;
-  color: ${Colors.dark};
+  color: ${props => props.theme.fontColor};
 `;
 
 export const Legendaries = () => {
@@ -45,6 +44,7 @@ export const Legendaries = () => {
     <Wrapper>
       <Title>Legendaries</Title>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={legendariesPokemons}
         renderItem={renderPokemons}
         onEndReached={loadMore}

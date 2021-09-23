@@ -12,7 +12,7 @@ const Card = styled(TouchableOpacity)`
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
-  background: ${Colors.white[2]};
+  background: ${props => props.theme.card};
   border-radius: 10px;
   padding: 5px 0 5px 20px;
   margin: 5px;
@@ -25,7 +25,7 @@ const PokeName = styled(Text)`
   text-transform: capitalize;
   font-size: 16px;
   line-height: 21px;
-  color: ${Colors.dark};
+  color: ${props => props.theme.fontColor};
   font-family: ${Fonts.bold};
 `;
 
@@ -33,7 +33,7 @@ const Circle = styled(View)`
   width: 38px;
   height: 38px;
   border-radius: 19px;
-  border: 3px solid ${Colors.black};
+  border: 3px solid ${props => props.theme.circle};
   align-items: center;
   justify-content: center;
   margin: 5px 0;
@@ -43,12 +43,12 @@ const StatsCount = styled(Text)`
   font-family: ${Fonts.regular};
   font-size: 15px;
   line-height: 17px;
-  color: ${Colors.dark};
+  color: ${props => props.theme.fontColor};
 `;
 
 const StatsTitle = styled(Text)`
   text-transform: capitalize;
-  color: ${Colors.gray};
+  color: ${props => props.theme.statColor};
   font-family: ${Fonts.regular};
   font-size: 12px;
   line-height: 14px;
