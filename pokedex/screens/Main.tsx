@@ -16,6 +16,7 @@ import { getPokemonsList, getTypes } from '../src/store/actions';
 import { ItemRenderProps } from '../api/types';
 import { FilterModal } from '../src/components/FilterModal';
 import { FlatListFooter } from '../src/components/Footer';
+import { Fonts } from '../src/theme/fonts';
 
 const Background = styled(View)`
   background-color: ${Colors.white[0]};
@@ -30,6 +31,7 @@ const Title = styled(Text)`
   font-size: 24px;
   line-height: 28px;
   text-align: center;
+  font-family: ${Fonts.regular};
 `;
 
 const Search = styled(TextInput)`

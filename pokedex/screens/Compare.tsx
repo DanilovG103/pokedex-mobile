@@ -2,10 +2,11 @@ import React from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { ItemRenderProps } from '../api/types';
 import { ComparingCard } from '../src/components/ComparingCard';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { clearComparedPokemons } from '../src/store/actions';
+import { Fonts } from '../src/theme/fonts';
 
 const Container = styled(View)`
   flex: 1;
@@ -16,7 +17,7 @@ const Container = styled(View)`
 const NoPokemons = styled(Text)`
   text-align: center;
   font-size: 18px;
-  font-weight: 700;
+  font-family: ${Fonts.bold};
   margin: auto;
 `;
 

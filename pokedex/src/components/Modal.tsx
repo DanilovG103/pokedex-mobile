@@ -14,6 +14,7 @@ import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { clearState, setPokemon } from '../store/actions';
 import { TypeBlock } from './TypeBlock';
+import { Fonts } from '../theme/fonts';
 
 interface Props {
   visible: boolean;
@@ -39,6 +40,7 @@ const Title = styled(Text)`
   font-size: 32px;
   text-align: center;
   color: ${Colors.dark};
+  font-family: ${Fonts.bold};
   text-transform: capitalize;
 `;
 
@@ -59,6 +61,7 @@ const Experience = styled(Text)`
 const Types = styled(Text)`
   text-transform: capitalize;
   font-size: 15px;
+  font-family: ${Fonts.regular};
   color: ${Colors.dark};
 `;
 
@@ -78,10 +81,12 @@ const AbilitiesBlock = styled(View)`
 
 const AbilitiesBlockTitle = styled(Text)`
   font-size: 24px;
+  font-family: ${Fonts.regular};
 `;
 
 const Ability = styled(Text)`
   text-transform: capitalize;
+  font-family: ${Fonts.regular};
   font-size: 17px;
 `;
 
@@ -90,11 +95,12 @@ const Statistics = styled(AbilitiesBlock)``;
 const StatisticsTitle = styled(Text)`
   font-size: 18px;
   text-transform: capitalize;
+  font-family: ${Fonts.regular};
 `;
 
 const StatisticsValue = styled(Text)`
   font-size: 16px;
-  font-weight: 700;
+  font-family: ${Fonts.bold};
 `;
 
 const Row = styled(View)`

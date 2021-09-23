@@ -3,6 +3,7 @@ import { Dimensions, Image, Text, View } from 'react-native';
 import styled from 'styled-components';
 import { PokemonTypes } from '../../api/types';
 import { Colors } from '../theme/colors';
+import { Fonts } from '../theme/fonts';
 import { TypeBlock } from './TypeBlock';
 
 interface Props {
@@ -26,6 +27,7 @@ const PokemonImage = styled(Image)`
 
 const PokemonName = styled(Text)`
   text-align: center;
+  font-family: ${Fonts.bold};
   text-transform: capitalize;
   font-size: 22px;
 `;
@@ -48,13 +50,14 @@ const Types = styled(View)`
 const CategoryTitle = styled(Text)`
   font-size: 18px;
   text-align: center;
-  font-weight: 700;
+  font-family: ${Fonts.bold};
   color: ${Colors.dark};
 `;
 
 const StatName = styled(Text)`
   text-transform: capitalize;
   font-size: 17px;
+  font-family: ${Fonts.regular};
   color: ${Colors.dark};
 `;
 

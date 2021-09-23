@@ -6,6 +6,7 @@ import { Colors } from '../theme/colors';
 import { getPokemon } from '../store/actions';
 import { PokemonTypes } from '../../api/types';
 import { TypeBlock } from './TypeBlock';
+import { Fonts } from '../theme/fonts';
 
 const Card = styled(TouchableOpacity)`
   align-items: center;
@@ -25,7 +26,7 @@ const PokeName = styled(Text)`
   font-size: 16px;
   line-height: 21px;
   color: ${Colors.dark};
-  font-weight: 700;
+  font-family: ${Fonts.bold};
 `;
 
 const Circle = styled(View)`
@@ -39,7 +40,7 @@ const Circle = styled(View)`
 `;
 
 const StatsCount = styled(Text)`
-  font-weight: 400;
+  font-family: ${Fonts.regular};
   font-size: 15px;
   line-height: 17px;
   color: ${Colors.dark};
@@ -48,6 +49,7 @@ const StatsCount = styled(Text)`
 const StatsTitle = styled(Text)`
   text-transform: capitalize;
   color: ${Colors.gray};
+  font-family: ${Fonts.regular};
   font-size: 12px;
   line-height: 14px;
 `;

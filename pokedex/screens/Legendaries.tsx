@@ -33,11 +33,13 @@ const Name = styled(Text)`
   font-size: 30px;
   text-align: center;
   text-transform: capitalize;
+  font-family: ${Fonts.regular};
 `;
 
 const Description = styled(Text)`
   font-size: 18px;
   margin: 5px 0;
+  font-family: ${Fonts.regular};
 `;
 
 const StatsBlock = styled(View)`
@@ -72,6 +74,7 @@ export const Legendaries = () => {
   const renderPokemons = ({ item }: ItemRenderProps) => {
     return (
       <>
+        <Line />
         <Name>{item.name}</Name>
         <PokeImage
           source={{
@@ -88,7 +91,6 @@ export const Legendaries = () => {
             ))}
           </StatsBlock>
         </Row>
-        <Line />
       </>
     );
   };
