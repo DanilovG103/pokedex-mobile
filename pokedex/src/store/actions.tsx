@@ -80,10 +80,6 @@ export const setPokemon = (pokemon: PokemonTypes) => (dispatch: Dispatch) => {
   dispatch({ type: 'SET_POKEMON', payload: pokemon });
 };
 
-export const clearState = () => (dispatch: Dispatch) => {
-  dispatch({ type: 'CLEAR_POKEMON_STATE' });
-};
-
 export const clearComparedPokemons = () => (dispatch: Dispatch) => {
   dispatch({ type: 'CLEAR_COMPARED_POKEMONS' });
 };

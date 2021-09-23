@@ -1,7 +1,9 @@
-import React from 'react';
-import { View, Text, Image } from 'react-native';
+import React, { Dispatch, SetStateAction } from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { ItemRenderProps } from '../../api/types';
+import { PokemonTypes } from '../../api/types';
+import { getPokemon } from '../store/actions';
 import { Colors } from '../theme/colors';
 import { Fonts } from '../theme/fonts';
 
@@ -43,16 +45,29 @@ const PokeImage = styled(Image)`
   height: 250px;
 `;
 
-export const LegendariesCard = ({ item }: ItemRenderProps) => {
+interface Props {
+  item: PokemonTypes;
+  activeModal: Dispatch<SetStateAction<boolean>>;
+}
+
+export const LegendariesCard = ({ item, activeModal }: Props) => {
+  const dispatch = useDispatch();
+
+  const openModal = (bool: boolean) => {
+    activeModal(bool);
+    dispatch(getPokemon(item.name));
+  };
   return (
     <View>
       <Line />
       <Name>{item.name}</Name>
-      <PokeImage
-        source={{
-          uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png`,
-        }}
-      />
+      <TouchableOpacity onPress={() => openModal(true)}>
+        <PokeImage
+          source={{
+            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png`,
+          }}
+        />
+      </TouchableOpacity>
       <Row>
         <StatsBlock>
           <Description>{item.stats[0].stat.name}</Description>

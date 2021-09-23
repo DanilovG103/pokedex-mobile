@@ -1,18 +1,18 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import {
-  Modal,
   View,
   Text,
   TouchableOpacity,
   Image,
   ActivityIndicator,
 } from 'react-native';
+import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Colors } from '../theme/colors';
 import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { clearState, setPokemon } from '../store/actions';
+import { setPokemon } from '../store/actions';
 import { TypeBlock } from './TypeBlock';
 import { Fonts } from '../theme/fonts';
 
@@ -20,14 +20,6 @@ interface Props {
   visible: boolean;
   setIsVisible: Dispatch<SetStateAction<boolean>>;
 }
-
-const Overlay = styled(View)`
-  background-color: rgba(0, 0, 0, 0.7);
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
-`;
 
 const PokemonInfoBlock = styled(View)`
   width: 100%;
@@ -37,7 +29,7 @@ const PokemonInfoBlock = styled(View)`
 `;
 
 const Title = styled(Text)`
-  font-size: 32px;
+  font-size: 22px;
   text-align: center;
   color: ${Colors.dark};
   font-family: ${Fonts.bold};
@@ -139,94 +131,90 @@ const UpperRow = styled(View)`
   justify-content: space-between;
 `;
 
+const PokeImage = styled(Image)`
+  resize-mode: contain;
+  width: 200px;
+  height: 200px;
+  align-self: center;
+`;
+
 export const PokemonModal = ({ visible, setIsVisible }: Props) => {
   const { pokemon } = useSelector(state => state.PokemonReducer);
   const dispatch = useDispatch();
 
-  const closeModal = () => {
-    setIsVisible(false);
-    dispatch(clearState());
-  };
-
   if (pokemon === null) {
     return (
-      <Modal transparent={true} visible={visible} animationType="fade">
-        <Overlay>
-          <ActivityIndicator size="large" />
-        </Overlay>
+      <Modal isVisible={visible}>
+        <ActivityIndicator size="large" />
       </Modal>
     );
   }
 
   return (
-    <Modal transparent={true} visible={visible} animationType="fade">
-      <Overlay>
-        <PokemonInfoBlock>
-          <UpperRow>
-            <TouchableOpacity onPress={closeModal}>
-              <CloseIcon />
-            </TouchableOpacity>
-            <Title>{pokemon?.name}</Title>
-            <TouchableOpacity onPress={() => dispatch(setPokemon(pokemon))}>
-              <Icon name="bar-chart" size={30} />
-            </TouchableOpacity>
-          </UpperRow>
-          <Image
-            style={{
-              resizeMode: 'contain',
-              width: 200,
-              height: 200,
-              alignSelf: 'center',
-            }}
-            source={{
-              uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon?.id}.png`,
-            }}
-          />
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <YellowCircle>
-              <Experience>{pokemon?.base_experience}</Experience>
-            </YellowCircle>
-            <TypesRow>
-              {pokemon?.types?.map(el => (
-                <TypeBlock type={el.type.name}>
-                  <Types>{el.type.name}</Types>
-                </TypeBlock>
-              ))}
-            </TypesRow>
-          </View>
-          <AbilitiesBlock>
-            <AbilitiesBlockTitle>Abilities</AbilitiesBlockTitle>
-            {pokemon?.abilities?.map(el => (
-              <Ability>
-                {'-'}
-                {el.ability.name}
-              </Ability>
+    <Modal
+      isVisible={visible}
+      onBackButtonPress={() => setIsVisible(false)}
+      onBackdropPress={() => setIsVisible(false)}
+      useNativeDriver>
+      <PokemonInfoBlock>
+        <UpperRow>
+          <TouchableOpacity onPress={() => setIsVisible(false)}>
+            <CloseIcon />
+          </TouchableOpacity>
+          <Title>{pokemon?.name}</Title>
+          <TouchableOpacity onPress={() => dispatch(setPokemon(pokemon))}>
+            <Icon name="bar-chart" size={30} />
+          </TouchableOpacity>
+        </UpperRow>
+        <PokeImage
+          source={{
+            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon?.id}.png`,
+          }}
+        />
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <YellowCircle>
+            <Experience>{pokemon?.base_experience}</Experience>
+          </YellowCircle>
+          <TypesRow>
+            {pokemon?.types?.map(el => (
+              <TypeBlock type={el.type.name}>
+                <Types>{el.type.name}</Types>
+              </TypeBlock>
             ))}
-          </AbilitiesBlock>
-          <Statistics>
-            <StatisticsTitle>Healthy Points</StatisticsTitle>
-            <StatisticsValue>
-              {pokemon?.stats
-                ?.filter(el => el.stat.name === 'hp')
-                ?.map(el => el.base_stat)}
-            </StatisticsValue>
-            <StatisticsTitle>Experience</StatisticsTitle>
-            <StatisticsValue>{pokemon?.base_experience}</StatisticsValue>
-          </Statistics>
-          <Row>
+          </TypesRow>
+        </View>
+        <AbilitiesBlock>
+          <AbilitiesBlockTitle>Abilities</AbilitiesBlockTitle>
+          {pokemon?.abilities?.map(el => (
+            <Ability>
+              {'-'}
+              {el.ability.name}
+            </Ability>
+          ))}
+        </AbilitiesBlock>
+        <Statistics>
+          <StatisticsTitle>Healthy Points</StatisticsTitle>
+          <StatisticsValue>
             {pokemon?.stats
-              ?.filter(el => el.stat.name !== 'hp' && el.stat.name !== 'speed')
-              ?.map(el => (
-                <Block>
-                  <Circle>
-                    <StatisticsValue>{el.base_stat}</StatisticsValue>
-                  </Circle>
-                  <StatsTitle>{el.stat.name}</StatsTitle>
-                </Block>
-              ))}
-          </Row>
-        </PokemonInfoBlock>
-      </Overlay>
+              ?.filter(el => el.stat.name === 'hp')
+              ?.map(el => el.base_stat)}
+          </StatisticsValue>
+          <StatisticsTitle>Experience</StatisticsTitle>
+          <StatisticsValue>{pokemon?.base_experience}</StatisticsValue>
+        </Statistics>
+        <Row>
+          {pokemon?.stats
+            ?.filter(el => el.stat.name !== 'hp' && el.stat.name !== 'speed')
+            ?.map(el => (
+              <Block>
+                <Circle>
+                  <StatisticsValue>{el.base_stat}</StatisticsValue>
+                </Circle>
+                <StatsTitle>{el.stat.name}</StatsTitle>
+              </Block>
+            ))}
+        </Row>
+      </PokemonInfoBlock>
     </Modal>
   );
 };
