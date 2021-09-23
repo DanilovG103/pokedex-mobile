@@ -96,3 +96,7 @@ export const setExperience =
 export const setAttack = (from: number, to: number) => (dispatch: Dispatch) => {
   dispatch({ type: 'SET_ATTACK', payload: { from, to } });
 };
+
+export const Refresh = () => (dispatch: Dispatch) => {
+  dispatch({ type: 'REFRESH' });
+};

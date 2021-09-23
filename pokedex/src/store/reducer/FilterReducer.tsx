@@ -33,6 +33,15 @@ export default function FilterReducer(state = initialState, action) {
             ? 100000
             : action.payload.to,
       };
+    case 'REFRESH':
+      return {
+        ...state,
+        selectedTypes: [],
+        experienceFrom: 0,
+        experienceTo: 100000,
+        attackFrom: 0,
+        attackTo: 100000,
+      };
     default:
       return state;
   }

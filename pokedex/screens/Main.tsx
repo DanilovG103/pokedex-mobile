@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import { Colors } from '../src/theme/colors';
 import { PokemonModal } from '../src/components/Modal';
 import { PokemonCard } from '../src/components/PokemonCard';
-import { getPokemonsList, getTypes } from '../src/store/actions';
+import { getPokemonsList, getTypes, Refresh } from '../src/store/actions';
 import { ItemRenderProps } from '../api/types';
 import { FilterModal } from '../src/components/FilterModal';
 import { FlatListFooter } from '../src/components/Footer';
@@ -57,6 +57,7 @@ export const Main = () => {
   const [searchValue, setSearchValue] = useState('');
   const [pokemonVisible, setPokemonVisible] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const { pokemons } = useSelector(state => state.PokemonReducer);
   const { selectedTypes, experienceFrom, experienceTo, attackFrom, attackTo } =
     useSelector(state => state.FilterReducer);
@@ -113,6 +114,9 @@ export const Main = () => {
         <Text>Filter</Text>
       </Filter>
       <FlatList
+        refreshing={refreshing}
+        onScrollToTop={() => setRefreshing(true)}
+        onRefresh={() => dispatch(Refresh())}
         showsVerticalScrollIndicator={false}
         data={filteredPokemons}
         renderItem={renderIt}
