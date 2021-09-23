@@ -15,12 +15,11 @@ const Line = styled(View)`
 `;
 
 const Name = styled(Text)`
-  font-size: 30px;
-  text-align: center;
+  font-size: 26px;
+  text-align: left;
   text-transform: capitalize;
   color: ${props => props.theme.fontColor};
   font-family: ${Fonts.regular};
-  align-self: flex-start;
 `;
 
 const Description = styled(Text)`
