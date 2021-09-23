@@ -29,7 +29,7 @@ const PokemonInfoBlock = styled(View)`
 `;
 
 const Title = styled(Text)`
-  font-size: 22px;
+  font-size: 20px;
   text-align: center;
   color: ${Colors.dark};
   font-family: ${Fonts.bold};
