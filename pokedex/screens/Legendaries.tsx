@@ -7,6 +7,7 @@ import { getLegendariesPokemonsList } from '../src/store/actions';
 import { FlatListFooter } from '../src/components/Footer';
 import { ItemRenderProps } from '../api/types';
 import { Fonts } from '../src/theme/fonts';
+import { LegendariesCard } from '../src/components/LegendariesCard';
 
 const Wrapper = styled(View)`
   flex: 1;
@@ -19,43 +20,6 @@ const Title = styled(Text)`
   text-align: center;
   font-size: 36px;
   color: ${Colors.dark};
-`;
-
-const Line = styled(View)`
-  height: 1px;
-  margin: 10px;
-  width: 100%;
-  align-self: center;
-  background-color: ${Colors.black};
-`;
-
-const Name = styled(Text)`
-  font-size: 30px;
-  text-align: center;
-  text-transform: capitalize;
-  font-family: ${Fonts.regular};
-`;
-
-const Description = styled(Text)`
-  font-size: 18px;
-  margin: 5px 0;
-  font-family: ${Fonts.regular};
-`;
-
-const StatsBlock = styled(View)`
-  align-items: center;
-  flex: 1;
-`;
-
-const Row = styled(View)`
-  margin: 15px 0;
-  flex-direction: row;
-`;
-
-const PokeImage = styled(Image)`
-  align-self: center;
-  width: 250px;
-  height: 250px;
 `;
 
 export const Legendaries = () => {
@@ -72,27 +36,7 @@ export const Legendaries = () => {
   };
 
   const renderPokemons = ({ item }: ItemRenderProps) => {
-    return (
-      <>
-        <Line />
-        <Name>{item.name}</Name>
-        <PokeImage
-          source={{
-            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png`,
-          }}
-        />
-        <Row>
-          <StatsBlock>
-            {item.stats.map(el => (
-              <>
-                <Description>{el.stat.name}</Description>
-                <Description>{el.base_stat}</Description>
-              </>
-            ))}
-          </StatsBlock>
-        </Row>
-      </>
-    );
+    return <LegendariesCard item={item} />;
   };
 
   return (
