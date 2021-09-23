@@ -20,6 +20,7 @@ const Name = styled(Text)`
   text-align: center;
   text-transform: capitalize;
   font-family: ${Fonts.regular};
+  align-self: flex-start;
 `;
 
 const Description = styled(Text)`
@@ -30,7 +31,7 @@ const Description = styled(Text)`
 `;
 
 const StatsBlock = styled(View)`
-  align-items: center;
+  align-items: flex-start;
   flex: 1;
 `;
 
@@ -45,6 +46,9 @@ const PokeImage = styled(Image)`
   height: 250px;
 `;
 
+const Card = styled(View)`
+  padding: 0 15px;
+`;
 interface Props {
   item: PokemonTypes;
   activeModal: Dispatch<SetStateAction<boolean>>;
@@ -57,10 +61,10 @@ export const LegendariesCard = ({ item, activeModal }: Props) => {
     activeModal(bool);
     dispatch(getPokemon(item.name));
   };
+
   return (
-    <View>
+    <Card>
       <Line />
-      <Name>{item.name}</Name>
       <TouchableOpacity onPress={() => openModal(true)}>
         <PokeImage
           source={{
@@ -68,6 +72,7 @@ export const LegendariesCard = ({ item, activeModal }: Props) => {
           }}
         />
       </TouchableOpacity>
+      <Name>{item.name}</Name>
       <Row>
         <StatsBlock>
           <Description>{item.stats[0].stat.name}</Description>
@@ -98,6 +103,6 @@ export const LegendariesCard = ({ item, activeModal }: Props) => {
           <Description>{item.stats[3].base_stat}</Description>
         </StatsBlock>
       </Row>
-    </View>
+    </Card>
   );
 };
