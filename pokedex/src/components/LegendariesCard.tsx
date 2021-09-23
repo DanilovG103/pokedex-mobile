@@ -75,7 +75,7 @@ export const LegendariesCard = ({ item, activeModal }: Props) => {
       <Name>{item.name}</Name>
       <Row>
         <StatsBlock>
-          <Description>{item.stats[0].stat.name}</Description>
+          <Description>Healthy Points</Description>
           <Description>{item.stats[0].base_stat}</Description>
         </StatsBlock>
         <StatsBlock>
