@@ -1,11 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -141,14 +135,6 @@ const PokeImage = styled(Image)`
 export const PokemonModal = ({ visible, setIsVisible }: Props) => {
   const { pokemon } = useSelector(state => state.PokemonReducer);
   const dispatch = useDispatch();
-
-  if (pokemon === null) {
-    return (
-      <Modal isVisible={visible}>
-        <ActivityIndicator size="large" />
-      </Modal>
-    );
-  }
 
   return (
     <Modal
