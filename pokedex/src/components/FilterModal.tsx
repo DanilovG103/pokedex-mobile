@@ -1,6 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import Modal from 'react-native-modal';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import styled, { useTheme } from 'styled-components';
 import { Colors } from '../theme/colors';
 import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
@@ -56,9 +62,15 @@ const TypeName = styled(Text)<{ selected: boolean }>`
   text-transform: capitalize;
 `;
 
+const Loader = styled(View)`
+  position: absolute;
+  top: 20px;
+  left: 50%;
+`;
+
 export const FilterModal = ({ visible, setVisible }: Props) => {
   const { types } = useSelector(state => state.PokemonReducer);
-  const { type } = useSelector(state => state.FilterReducer);
+  const { type, loading } = useSelector(state => state.FilterReducer);
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -66,7 +78,7 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
     dispatch(getPokemonByType(name));
   };
 
-  const renderCheckBox = ({ item }: TypeRenderProps) => {
+  const renderTypes = ({ item }: TypeRenderProps) => {
     return (
       <Wrapper>
         <TypeBlock onPress={() => action(item.name)}>
@@ -92,13 +104,18 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
       }}>
       <Block>
         <Title>Type</Title>
+        {loading ? (
+          <Loader>
+            <ActivityIndicator size="large" />
+          </Loader>
+        ) : null}
         <FlatList
           data={types.filter(
             item => item.name !== 'unknown' && item.name !== 'shadow',
           )}
           numColumns={3}
           keyExtractor={item => item.name}
-          renderItem={renderCheckBox}
+          renderItem={renderTypes}
         />
         <Line />
         <Title>Experience</Title>

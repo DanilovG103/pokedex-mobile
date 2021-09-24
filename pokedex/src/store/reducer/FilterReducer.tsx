@@ -4,6 +4,7 @@ const initialState = {
   attackFrom: 0,
   attackTo: 100000,
   type: null,
+  loading: false,
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -35,9 +36,15 @@ export default function FilterReducer(state = initialState, action) {
         attackFrom: 0,
         attackTo: 100000,
       };
+    case 'GET_POKEMON_BY_TYPE_LOADING':
+      return {
+        ...state,
+        loading: true,
+      };
     case 'GET_POKEMON_BY_TYPE_SUCCESS':
       return {
         ...state,
+        loading: false,
         type: action.payload.type,
       };
     default:

@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { Colors } from '../theme/colors';
@@ -9,6 +9,7 @@ import { TypeBlock } from './TypeBlock';
 import { Fonts } from '../theme/fonts';
 
 const Card = styled(TouchableOpacity)`
+  width: ${Dimensions.get('window').width - 60}px;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
@@ -104,7 +105,7 @@ export const PokemonCard = ({ pokemon, activeModal }: Props) => {
               </View>
             ))}
         </Wrapper>
-        <Wrapper width={120}>
+        <Wrapper width={110}>
           {pokemon.types.map(el => (
             <TypeBlock key={el.type.name} type={el.type.name}>
               <TypeTitle>{el.type.name} </TypeTitle>

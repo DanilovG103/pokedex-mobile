@@ -64,7 +64,7 @@ export const Main = () => {
   const { type, experienceFrom, experienceTo, attackFrom, attackTo } =
     useSelector(state => state.FilterReducer);
   const dispatch = useDispatch();
-  const loading = pagination < 898;
+  const limit = pagination < 898;
 
   const filteredPokemons = pokemons
     .filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
@@ -80,10 +80,10 @@ export const Main = () => {
     );
 
   useEffect(() => {
-    if (loading) {
+    if (limit) {
       dispatch(getPokemonsList(pagination));
     }
-  }, [pagination, dispatch, loading]);
+  }, [pagination, dispatch, limit]);
 
   const loadMore = () => {
     setPagination(prevState => prevState + 1);
@@ -124,7 +124,7 @@ export const Main = () => {
         renderItem={renderIt}
         onEndReached={loadMore}
         onEndReachedThreshold={1}
-        ListFooterComponent={loading ? FlatListFooter : null}
+        ListFooterComponent={limit ? FlatListFooter : null}
         keyExtractor={item => item.id.toString()}
       />
       <PokemonModal visible={pokemonVisible} setIsVisible={setPokemonVisible} />
