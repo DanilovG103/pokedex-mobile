@@ -66,8 +66,6 @@ export const Main = () => {
   const dispatch = useDispatch();
   const loading = pagination < 898;
 
-  console.log(filteredByTypePokemons);
-
   const filteredPokemons = pokemons
     .filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
     .filter(

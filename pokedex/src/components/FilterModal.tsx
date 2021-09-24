@@ -4,12 +4,12 @@ import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import styled, { useTheme } from 'styled-components';
 import { Colors } from '../theme/colors';
 import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
-import { CheckBox } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPokemonByType, setSelectedValues } from '../store/actions';
+import { getPokemonByType } from '../store/actions';
 import { TypeRenderProps } from '../../api/types';
 import { ExpAttFilter } from './ExpAttFilter';
 import { Fonts } from '../theme/fonts';
+
 interface Props {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
@@ -50,8 +50,8 @@ const TypeBlock = styled(TouchableOpacity)`
   margin: 7px 0;
 `;
 
-const TypeName = styled(Text)`
-  color: ${props => props.theme.fontColor};
+const TypeName = styled(Text)<{ selected: boolean }>`
+  color: ${props => (props.selected ? Colors.red : props.theme.fontColor)};
   font-family: ${Fonts.regular};
   text-transform: capitalize;
 `;
@@ -62,8 +62,6 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
 
-  console.log(type);
-
   const action = (name: string) => {
     dispatch(getPokemonByType(name));
   };
@@ -72,7 +70,7 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
     return (
       <Wrapper>
         <TypeBlock onPress={() => action(item.name)}>
-          <TypeName>{item.name}</TypeName>
+          <TypeName selected={type === item.name}>{item.name}</TypeName>
         </TypeBlock>
       </Wrapper>
     );
