@@ -131,8 +131,8 @@ const UpperRow = styled(View)`
 
 const PokeImage = styled(Image)`
   resize-mode: contain;
-  width: 200px;
-  height: 200px;
+  width: 165px;
+  height: 165px;
   align-self: center;
 `;
 
