@@ -82,7 +82,7 @@ export const ComparingCard = ({ pokemon }: Props) => {
       <Types>
         {pokemon.types?.map(el => (
           <TypeBlock type={el.type.name}>
-            <StatName style={{ color: '#212121' }}>{el.type.name} </StatName>
+            <StatName style={{ color: Colors.dark }}>{el.type.name} </StatName>
           </TypeBlock>
         ))}
       </Types>
