@@ -61,6 +61,30 @@ export const getPokemon = (name: string) => async (dispatch: Dispatch) => {
   }
 };
 
+export const getPokemonByType =
+  (type: string) => async (dispatch: Dispatch) => {
+    try {
+      dispatch({ type: 'GET_POKEMON_BY_TYPE_LOADING' });
+
+      const response = await axios.get(
+        `https://pokeapi.co/api/v2/type/${type}`,
+      );
+
+      const datas = response.data.pokemon.map(el =>
+        fetch(el.pokemon.url).then(res => res.json()),
+      );
+
+      const pokemons = await Promise.all(datas);
+
+      dispatch({
+        type: 'GET_POKEMON_BY_TYPE_SUCCESS',
+        payload: { type, pokemons },
+      });
+    } catch (error) {
+      dispatch({ type: 'GET_POKEMON_BY_TYPE_ERROR' });
+    }
+  };
+
 export const getTypes = () => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: 'GET_TYPES_LOADING' });

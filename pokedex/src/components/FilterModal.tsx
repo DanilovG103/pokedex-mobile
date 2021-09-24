@@ -6,9 +6,10 @@ import { Colors } from '../theme/colors';
 import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
 import { CheckBox } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedValues } from '../store/actions';
+import { getPokemonByType, setSelectedValues } from '../store/actions';
 import { TypeRenderProps } from '../../api/types';
 import { ExpAttFilter } from './ExpAttFilter';
+import { Fonts } from '../theme/fonts';
 interface Props {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
@@ -38,43 +39,42 @@ const Title = styled(Text)`
   color: ${props => props.theme.fontColor};
 `;
 
-const CheckBoxWrapper = styled(View)`
+const Wrapper = styled(View)`
   width: 35%;
   align-items: flex-start;
   justify-content: center;
 `;
 
+const TypeBlock = styled(TouchableOpacity)`
+  padding: 0 20px;
+  margin: 7px 0;
+`;
+
+const TypeName = styled(Text)`
+  color: ${props => props.theme.fontColor};
+  font-family: ${Fonts.regular};
+  text-transform: capitalize;
+`;
+
 export const FilterModal = ({ visible, setVisible }: Props) => {
   const { types } = useSelector(state => state.PokemonReducer);
-  const { selectedTypes } = useSelector(state => state.FilterReducer);
+  const { type } = useSelector(state => state.FilterReducer);
   const dispatch = useDispatch();
   const theme = useTheme();
 
+  console.log(type);
+
   const action = (name: string) => {
-    dispatch(setSelectedValues(name));
+    dispatch(getPokemonByType(name));
   };
 
   const renderCheckBox = ({ item }: TypeRenderProps) => {
     return (
-      <CheckBoxWrapper>
-        <CheckBox
-          onPress={() => action(item.name)}
-          checkedColor={Colors.red}
-          checked={selectedTypes.includes(item.name)}
-          title={item.name}
-          containerStyle={{
-            backgroundColor: 'transparent',
-            borderColor: 'transparent',
-            paddingHorizontal: 0,
-            margin: 0,
-          }}
-          textStyle={{
-            fontSize: 12,
-            textTransform: 'capitalize',
-            color: theme.type === 'dark' ? Colors.white[4] : Colors.dark,
-          }}
-        />
-      </CheckBoxWrapper>
+      <Wrapper>
+        <TypeBlock onPress={() => action(item.name)}>
+          <TypeName>{item.name}</TypeName>
+        </TypeBlock>
+      </Wrapper>
     );
   };
 

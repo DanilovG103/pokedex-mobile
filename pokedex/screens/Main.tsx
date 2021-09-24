@@ -58,11 +58,15 @@ export const Main = () => {
   const [pokemonVisible, setPokemonVisible] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const { pokemons } = useSelector(state => state.PokemonReducer);
-  const { selectedTypes, experienceFrom, experienceTo, attackFrom, attackTo } =
+  const { pokemons, filteredByTypePokemons } = useSelector(
+    state => state.PokemonReducer,
+  );
+  const { type, experienceFrom, experienceTo, attackFrom, attackTo } =
     useSelector(state => state.FilterReducer);
   const dispatch = useDispatch();
   const loading = pagination < 898;
+
+  console.log(filteredByTypePokemons);
 
   const filteredPokemons = pokemons
     .filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
@@ -118,7 +122,7 @@ export const Main = () => {
         onScrollToTop={() => setRefreshing(true)}
         onRefresh={() => dispatch(Refresh())}
         showsVerticalScrollIndicator={false}
-        data={filteredPokemons}
+        data={type === null ? filteredPokemons : filteredByTypePokemons}
         renderItem={renderIt}
         onEndReached={loadMore}
         onEndReachedThreshold={1}

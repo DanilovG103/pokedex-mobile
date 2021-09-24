@@ -1,20 +1,13 @@
 const initialState = {
-  selectedTypes: [],
   experienceFrom: 0,
   experienceTo: 100000,
   attackFrom: 0,
   attackTo: 100000,
+  type: null,
 };
 
 export default function FilterReducer(state = initialState, action) {
   switch (action.type) {
-    case 'SET_SELECTED_TYPES':
-      return {
-        ...state,
-        selectedTypes: state.selectedTypes
-          .filter(item => item !== action.payload)
-          .concat(action.payload),
-      };
     case 'SET_EXPERIENCE':
       return {
         ...state,
@@ -36,11 +29,16 @@ export default function FilterReducer(state = initialState, action) {
     case 'REFRESH':
       return {
         ...state,
-        selectedTypes: [],
+        type: null,
         experienceFrom: 0,
         experienceTo: 100000,
         attackFrom: 0,
         attackTo: 100000,
+      };
+    case 'GET_POKEMON_BY_TYPE_SUCCESS':
+      return {
+        ...state,
+        type: action.payload.type,
       };
     default:
       return state;
