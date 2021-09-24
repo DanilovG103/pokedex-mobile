@@ -7,7 +7,6 @@ import { FlatListFooter } from '../src/components/Footer';
 import { ItemRenderProps } from '../api/types';
 import { Fonts } from '../src/theme/fonts';
 import { LegendariesCard } from '../src/components/LegendariesCard';
-import { PokemonModal } from '../src/components/Modal';
 
 const Wrapper = styled(View)`
   flex: 1;
@@ -24,7 +23,6 @@ const Title = styled(Text)`
 
 export const Legendaries = () => {
   const [pagination, setPagination] = useState(898);
-  const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
   const { legendariesPokemons } = useSelector(state => state.PokemonReducer);
 
@@ -37,7 +35,7 @@ export const Legendaries = () => {
   };
 
   const renderPokemons = ({ item }: ItemRenderProps) => {
-    return <LegendariesCard item={item} activeModal={setVisible} />;
+    return <LegendariesCard pokemon={item} />;
   };
 
   return (
@@ -50,9 +48,8 @@ export const Legendaries = () => {
         onEndReached={loadMore}
         ListFooterComponent={FlatListFooter}
         onEndReachedThreshold={1}
-        keyExtractor={() => Math.random().toString()}
+        keyExtractor={item => item.id.toString()}
       />
-      <PokemonModal visible={visible} setIsVisible={setVisible} />
     </Wrapper>
   );
 };

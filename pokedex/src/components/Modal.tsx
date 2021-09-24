@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Modal from 'react-native-modal';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled, { useTheme } from 'styled-components';
 import { Colors } from '../theme/colors';
 import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
@@ -9,10 +9,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { setPokemon } from '../store/actions';
 import { TypeBlock } from './TypeBlock';
 import { Fonts } from '../theme/fonts';
+import { PokemonTypes } from '../../api/types';
 
 interface Props {
   visible: boolean;
   setIsVisible: Dispatch<SetStateAction<boolean>>;
+  data: PokemonTypes;
 }
 
 const PokemonInfoBlock = styled(View)`
@@ -136,8 +138,7 @@ const PokeImage = styled(Image)`
   align-self: center;
 `;
 
-export const PokemonModal = ({ visible, setIsVisible }: Props) => {
-  const { pokemon } = useSelector(state => state.PokemonReducer);
+export const PokemonModal = ({ visible, setIsVisible, data }: Props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -152,8 +153,8 @@ export const PokemonModal = ({ visible, setIsVisible }: Props) => {
           <TouchableOpacity onPress={() => setIsVisible(false)}>
             <CloseIcon darkTheme={theme.type === 'dark'} />
           </TouchableOpacity>
-          <Title>{pokemon?.name}</Title>
-          <TouchableOpacity onPress={() => dispatch(setPokemon(pokemon))}>
+          <Title>{data.name}</Title>
+          <TouchableOpacity onPress={() => dispatch(setPokemon(data))}>
             <Icon
               name="bar-chart"
               size={30}
@@ -163,15 +164,15 @@ export const PokemonModal = ({ visible, setIsVisible }: Props) => {
         </UpperRow>
         <PokeImage
           source={{
-            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon?.id}.png`,
+            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data?.id}.png`,
           }}
         />
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <YellowCircle>
-            <Experience>{pokemon?.base_experience}</Experience>
+            <Experience>{data?.base_experience}</Experience>
           </YellowCircle>
           <TypesRow>
-            {pokemon?.types?.map(el => (
+            {data?.types?.map(el => (
               <TypeBlock type={el.type.name}>
                 <Types>{el.type.name}</Types>
               </TypeBlock>
@@ -180,7 +181,7 @@ export const PokemonModal = ({ visible, setIsVisible }: Props) => {
         </View>
         <AbilitiesBlock>
           <AbilitiesBlockTitle>Abilities</AbilitiesBlockTitle>
-          {pokemon?.abilities?.map(el => (
+          {data?.abilities?.map(el => (
             <Ability>
               {'-'}
               {el.ability.name}
@@ -190,15 +191,15 @@ export const PokemonModal = ({ visible, setIsVisible }: Props) => {
         <Statistics>
           <StatisticsTitle>Healthy Points</StatisticsTitle>
           <StatisticsValue>
-            {pokemon?.stats
+            {data?.stats
               ?.filter(el => el.stat.name === 'hp')
               ?.map(el => el.base_stat)}
           </StatisticsValue>
           <StatisticsTitle>Experience</StatisticsTitle>
-          <StatisticsValue>{pokemon?.base_experience}</StatisticsValue>
+          <StatisticsValue>{data?.base_experience}</StatisticsValue>
         </Statistics>
         <Row>
-          {pokemon?.stats
+          {data?.stats
             ?.filter(el => el.stat.name !== 'hp' && el.stat.name !== 'speed')
             ?.map(el => (
               <Block>

@@ -9,7 +9,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Colors } from '../src/theme/colors';
-import { PokemonModal } from '../src/components/Modal';
 import { PokemonCard } from '../src/components/PokemonCard';
 import { getPokemonsList, getTypes, Refresh } from '../src/store/actions';
 import { ItemRenderProps } from '../api/types';
@@ -55,7 +54,6 @@ const Filter = styled(TouchableOpacity)`
 export const Main = () => {
   const [pagination, setPagination] = useState(0);
   const [searchValue, setSearchValue] = useState('');
-  const [pokemonVisible, setPokemonVisible] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const { pokemons, filteredByTypePokemons } = useSelector(
@@ -90,7 +88,7 @@ export const Main = () => {
   };
 
   const renderIt = ({ item }: ItemRenderProps) => {
-    return <PokemonCard pokemon={item} activeModal={setPokemonVisible} />;
+    return <PokemonCard pokemon={item} />;
   };
 
   const search = (value: string) => {
@@ -127,7 +125,6 @@ export const Main = () => {
         ListFooterComponent={limit ? FlatListFooter : null}
         keyExtractor={item => item.id.toString()}
       />
-      <PokemonModal visible={pokemonVisible} setIsVisible={setPokemonVisible} />
       <FilterModal visible={filterVisible} setVisible={setFilterVisible} />
     </Background>
   );

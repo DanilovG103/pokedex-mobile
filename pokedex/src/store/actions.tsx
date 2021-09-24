@@ -44,23 +44,6 @@ export const getLegendariesPokemonsList =
     }
   };
 
-export const getPokemon = (name: string) => async (dispatch: Dispatch) => {
-  try {
-    dispatch({ type: 'GET_POKEMON_LOADING' });
-
-    const response = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/${name}`,
-    );
-
-    dispatch({
-      type: 'GET_POKEMON_SUCCESS',
-      payload: response.data,
-    });
-  } catch (error) {
-    dispatch({ type: 'GET_POKEMON_ERROR' });
-  }
-};
-
 export const getPokemonByType =
   (type: string) => async (dispatch: Dispatch) => {
     try {

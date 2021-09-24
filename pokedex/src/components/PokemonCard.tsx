@@ -1,12 +1,11 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 import { Colors } from '../theme/colors';
-import { getPokemon } from '../store/actions';
 import { PokemonTypes } from '../../api/types';
 import { TypeBlock } from './TypeBlock';
 import { Fonts } from '../theme/fonts';
+import { PokemonModal } from './Modal';
 
 const Card = styled(TouchableOpacity)`
   width: ${Dimensions.get('window').width - 60}px;
@@ -76,19 +75,13 @@ const PokemonImage = styled(Image)`
 
 interface Props {
   pokemon: PokemonTypes;
-  activeModal: Dispatch<SetStateAction<boolean>>;
 }
 
-export const PokemonCard = ({ pokemon, activeModal }: Props) => {
-  const dispatch = useDispatch();
-
-  const openModal = (bool: boolean) => {
-    activeModal(bool);
-    dispatch(getPokemon(pokemon.name));
-  };
+export const PokemonCard = ({ pokemon }: Props) => {
+  const [pokemonVisible, setPokemonVisible] = useState(false);
 
   return (
-    <Card onPress={() => openModal(true)}>
+    <Card onPress={() => setPokemonVisible(true)}>
       <View>
         <PokeName>{pokemon.name}</PokeName>
         <Wrapper>
@@ -117,6 +110,11 @@ export const PokemonCard = ({ pokemon, activeModal }: Props) => {
         source={{
           uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`,
         }}
+      />
+      <PokemonModal
+        visible={pokemonVisible}
+        setIsVisible={setPokemonVisible}
+        data={pokemon}
       />
     </Card>
   );
