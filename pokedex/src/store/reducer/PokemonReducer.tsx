@@ -75,6 +75,11 @@ export default function PokemonReducer(state = initialState, action) {
         loading: false,
         filteredByTypePokemons: action.payload.pokemons,
       };
+    case 'REFRESH':
+      return {
+        ...state,
+        filteredByTypePokemons: [],
+      };
     default:
       return state;
   }
