@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Modal from 'react-native-modal';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import styled, { useTheme } from 'styled-components';
 import { Colors } from '../theme/colors';
 import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { setPokemon } from '../store/actions';
 import { TypeBlock } from './TypeBlock';
 import { Fonts } from '../theme/fonts';
@@ -60,33 +60,24 @@ const TypesRow = styled(View)`
   padding-right: 50px;
 `;
 
-const AbilitiesBlock = styled(View)`
+const InfoBlock = styled(View)`
   background-color: ${props => props.theme.card};
   padding: 15px;
   margin-top: 10px;
   border-radius: 8px;
 `;
 
-const AbilitiesBlockTitle = styled(Text)`
+const AbilitiesBlockTitle = styled(Types)`
   font-size: 24px;
-  font-family: ${Fonts.regular};
   color: ${props => props.theme.fontColor};
 `;
 
-const Ability = styled(Text)`
-  text-transform: capitalize;
-  font-family: ${Fonts.regular};
+const Ability = styled(AbilitiesBlockTitle)`
   font-size: 17px;
-  color: ${props => props.theme.fontColor};
 `;
 
-const Statistics = styled(AbilitiesBlock)``;
-
-const StatisticsTitle = styled(Text)`
+const StatisticsTitle = styled(Ability)`
   font-size: 18px;
-  text-transform: capitalize;
-  font-family: ${Fonts.regular};
-  color: ${props => props.theme.fontColor};
 `;
 
 const StatisticsValue = styled(Text)`
@@ -111,13 +102,9 @@ const Block = styled(View)`
   border-radius: 8px;
 `;
 
-const Circle = styled(View)`
-  align-items: center;
-  justify-content: center;
+const Circle = styled(YellowCircle)`
   border: 3px solid ${props => props.theme.circle};
-  width: 38px;
-  height: 38px;
-  border-radius: 19px;
+  background-color: transparent;
 `;
 
 const StatsTitle = styled(StatisticsTitle)`
@@ -125,10 +112,8 @@ const StatsTitle = styled(StatisticsTitle)`
   text-align: center;
 `;
 
-const UpperRow = styled(View)`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+const UpperRow = styled(Row)`
+  margin-top: 0;
 `;
 
 const PokeImage = styled(Image)`
@@ -164,44 +149,40 @@ export const PokemonModal = ({ visible, setIsVisible, data }: Props) => {
         </UpperRow>
         <PokeImage
           source={{
-            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data?.id}.png`,
+            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`,
           }}
         />
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <UpperRow>
           <YellowCircle>
-            <Experience>{data?.base_experience}</Experience>
+            <Experience>{data.base_experience}</Experience>
           </YellowCircle>
           <TypesRow>
-            {data?.types?.map(el => (
+            {data.types.map(el => (
               <TypeBlock type={el.type.name}>
                 <Types>{el.type.name}</Types>
               </TypeBlock>
             ))}
           </TypesRow>
-        </View>
-        <AbilitiesBlock>
+        </UpperRow>
+        <InfoBlock>
           <AbilitiesBlockTitle>Abilities</AbilitiesBlockTitle>
-          {data?.abilities?.map(el => (
+          {data.abilities.map(el => (
             <Ability>
               {'-'}
               {el.ability.name}
             </Ability>
           ))}
-        </AbilitiesBlock>
-        <Statistics>
+        </InfoBlock>
+        <InfoBlock>
           <StatisticsTitle>Healthy Points</StatisticsTitle>
-          <StatisticsValue>
-            {data?.stats
-              ?.filter(el => el.stat.name === 'hp')
-              ?.map(el => el.base_stat)}
-          </StatisticsValue>
+          <StatisticsValue>{data.stats[0].base_stat}</StatisticsValue>
           <StatisticsTitle>Experience</StatisticsTitle>
-          <StatisticsValue>{data?.base_experience}</StatisticsValue>
-        </Statistics>
+          <StatisticsValue>{data.base_experience}</StatisticsValue>
+        </InfoBlock>
         <Row>
-          {data?.stats
-            ?.filter(el => el.stat.name !== 'hp' && el.stat.name !== 'speed')
-            ?.map(el => (
+          {data.stats
+            .filter(el => el.stat.name !== 'hp' && el.stat.name !== 'speed')
+            .map(el => (
               <Block>
                 <Circle>
                   <StatisticsValue>{el.base_stat}</StatisticsValue>
