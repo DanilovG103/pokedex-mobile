@@ -10,7 +10,6 @@ import { PokemonModal } from './Modal';
 const Card = styled(TouchableOpacity)`
   width: ${Dimensions.get('window').width - 60}px;
   align-items: center;
-  justify-content: space-between;
   flex-direction: row;
   background: ${props => props.theme.card};
   border-radius: 10px;
@@ -23,7 +22,7 @@ const Card = styled(TouchableOpacity)`
 const PokeName = styled(Text)`
   margin-top: 5px;
   text-transform: capitalize;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 21px;
   color: ${props => props.theme.fontColor};
   font-family: ${Fonts.bold};
@@ -67,6 +66,8 @@ const Wrapper = styled(View)<{ width?: number }>`
 `;
 
 const PokemonImage = styled(Image)`
+  position: absolute;
+  right: 0px;
   resize-mode: contain;
   width: 150px;
   height: 120px;
