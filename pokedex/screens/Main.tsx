@@ -77,6 +77,19 @@ export const Main = () => {
         item.stats[1].base_stat < attackTo,
     );
 
+  const filteredWithTypePokemons = filteredByTypePokemons
+    .filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
+    .filter(
+      item =>
+        item.base_experience >= experienceFrom &&
+        item.base_experience < experienceTo,
+    )
+    .filter(
+      item =>
+        item.stats[1].base_stat >= attackFrom &&
+        item.stats[1].base_stat < attackTo,
+    );
+
   useEffect(() => {
     if (limit) {
       dispatch(getPokemonsList(pagination));
@@ -118,7 +131,7 @@ export const Main = () => {
         onScrollToTop={() => setRefreshing(true)}
         onRefresh={() => dispatch(Refresh())}
         showsVerticalScrollIndicator={false}
-        data={type === null ? filteredPokemons : filteredByTypePokemons}
+        data={type === null ? filteredPokemons : filteredWithTypePokemons}
         renderItem={renderIt}
         onEndReached={loadMore}
         onEndReachedThreshold={1}
