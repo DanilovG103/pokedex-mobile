@@ -62,7 +62,7 @@ export const Main = () => {
   const { type, experienceFrom, experienceTo, attackFrom, attackTo } =
     useSelector(state => state.FilterReducer);
   const dispatch = useDispatch();
-  const limit = pagination < 898;
+  const limit = pagination < 898 && filteredByTypePokemons.length === 0;
 
   const filteredPokemons = pokemons
     .filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
