@@ -4,7 +4,6 @@ const initialState = {
   legendariesPokemons: [],
   errorMessage: '',
   comparedPokemons: [],
-  types: [],
   filteredByTypePokemons: [],
 };
 
@@ -41,23 +40,6 @@ export default function PokemonReducer(state = initialState, action) {
       return {
         ...state,
         comparedPokemons: [],
-      };
-    case 'GET_TYPES_LOADING':
-      return {
-        ...state,
-        loading: true,
-      };
-    case 'GET_TYPES_SUCCESS':
-      return {
-        ...state,
-        loading: false,
-        types: action.payload.results,
-      };
-    case 'GET_TYPES_ERROR':
-      return {
-        ...state,
-        loading: false,
-        errorMessage: 'An error occured',
       };
     case 'GET_L_POKEMON_LOADING':
       return {

@@ -69,8 +69,9 @@ const Loader = styled(View)`
 `;
 
 export const FilterModal = ({ visible, setVisible }: Props) => {
-  const { types } = useSelector(state => state.PokemonReducer);
-  const { type, loading } = useSelector(state => state.FilterReducer);
+  const { type, types, typeLoading } = useSelector(
+    state => state.FilterReducer,
+  );
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -104,7 +105,7 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
       }}>
       <Block>
         <Title>Type</Title>
-        {loading ? (
+        {typeLoading ? (
           <Loader>
             <ActivityIndicator size="large" />
           </Loader>
