@@ -14,22 +14,14 @@ export default function FilterReducer(state = initialState, action) {
     case 'SET_EXPERIENCE':
       return {
         ...state,
-        experienceFrom:
-          action.payload.from > action.payload.to ||
-          action.payload.from > state.experienceTo
-            ? 0
-            : action.payload.from,
+        experienceFrom: action.payload.from,
         experienceTo:
           action.payload.to < action.payload.from + 1 ? 609 : action.payload.to,
       };
     case 'SET_ATTACK':
       return {
         ...state,
-        attackFrom:
-          action.payload.from > action.payload.to ||
-          action.payload.from > state.attackTo
-            ? 0
-            : action.payload.from,
+        attackFrom: action.payload.from,
         attackTo:
           action.payload.to < action.payload.from + 1 ? 600 : action.payload.to,
       };
