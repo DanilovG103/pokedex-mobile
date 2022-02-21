@@ -12,7 +12,7 @@ type Stats = {
   };
 };
 
-type Types = {
+export type Types = {
   slot: number;
   type: {
     name: string;

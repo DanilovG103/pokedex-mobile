@@ -1,3 +1,5 @@
+import { PokemonTypes, Types } from '../../api/types';
+
 export enum TYPE {
   GET_POKES_LOADING = 'GET_POKES_LOADING',
   GET_POKES_SUCCESS = 'GET_POKES_SUCCESS',
@@ -17,4 +19,33 @@ export enum TYPE {
   SET_EXPERIENCE = 'SET_EXPERIENCE',
   SET_ATTACK = 'SET_ATTACK',
   REFRESH = 'REFRESH',
+}
+
+export enum SAGATYPE {
+  GET_POKES = 'GET_POKES',
+}
+
+export interface Store {
+  PokemonReducer: PokemonReducer;
+  FilterReducer: FilterReducer;
+}
+
+export interface PokemonReducer {
+  loading: boolean;
+  pokemons: PokemonTypes[];
+  legendariesPokemons: PokemonTypes[];
+  errorMessage: string;
+  comparedPokemons: PokemonTypes[];
+  filteredByTypePokemons: PokemonTypes[];
+}
+
+export interface FilterReducer {
+  experienceFrom: number;
+  experienceTo: number;
+  attackFrom: number;
+  attackTo: number;
+  types: Types[];
+  type: Pick<Types, 'type'>;
+  loading: boolean;
+  typeLoading: boolean;
 }
