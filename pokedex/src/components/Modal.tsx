@@ -10,6 +10,7 @@ import { setPokemon } from '../store/actions';
 import { TypeBlock } from './TypeBlock';
 import { Fonts } from '../theme/fonts';
 import { PokemonTypes } from '../../api/types';
+import { setPoke } from '../store/saga/utils/utils';
 
 interface Props {
   visible: boolean;
@@ -139,7 +140,7 @@ export const PokemonModal = ({ visible, setIsVisible, data }: Props) => {
             <CloseIcon darkTheme={theme.type === 'dark'} />
           </TouchableOpacity>
           <Title>{data.name}</Title>
-          <TouchableOpacity onPress={() => dispatch(setPokemon(data))}>
+          <TouchableOpacity onPress={() => dispatch(setPoke(data))}>
             <Icon
               name="bar-chart"
               size={30}

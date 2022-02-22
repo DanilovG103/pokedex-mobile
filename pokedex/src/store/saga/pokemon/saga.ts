@@ -69,11 +69,24 @@ function* pokesTypesWorker(action) {
       type: TYPE.GET_POKEMON_BY_TYPE_SUCCESS,
       payload: { type: typeName, pokemons },
     });
-  } catch (error) {}
+  } catch (error) {
+    yield put({ type: TYPE.GET_POKEMON_BY_TYPE_ERROR });
+  }
+}
+
+function* setPokemonWorker(action) {
+  const { pokemon } = action;
+  yield put({ type: TYPE.SET_POKEMON, payload: pokemon });
+}
+
+function* removePokemonsWorker() {
+  yield put({ type: TYPE.CLEAR_COMPARED_POKEMONS });
 }
 
 export function* pokemonWatcher() {
   yield takeEvery(SAGATYPE.GET_POKES, pokemonWorker);
   yield takeEvery(SAGATYPE.GET_L_POKES, legendariesPokemonWorker);
   yield takeEvery(SAGATYPE.GET_POKEMON_BY_TYPE, pokesTypesWorker);
+  yield takeEvery(SAGATYPE.SET_POKEMON, setPokemonWorker);
+  yield takeEvery(SAGATYPE.REMOVE_POKEMONS, removePokemonsWorker);
 }

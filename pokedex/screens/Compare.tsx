@@ -8,6 +8,7 @@ import { ComparingCard } from '../src/components/ComparingCard';
 import { clearComparedPokemons } from '../src/store/actions';
 import { Fonts } from '../src/theme/fonts';
 import { Colors } from '../src/theme/colors';
+import { SAGATYPE } from '../src/store/types';
 
 const Container = styled(View)`
   flex: 1;
@@ -55,7 +56,7 @@ export const Compare = () => {
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id.toString()}
       />
-      <ClearIcon onPress={() => dispatch(clearComparedPokemons())}>
+      <ClearIcon onPress={() => dispatch({ type: SAGATYPE.REMOVE_POKEMONS })}>
         <Icon
           name="trash"
           size={30}
