@@ -15,6 +15,7 @@ import { getPokemonByType } from '../store/actions';
 import { TypeRenderProps } from '../../api/types';
 import { ExpAttFilter } from './ExpAttFilter';
 import { Fonts } from '../theme/fonts';
+import { selectFilter } from '../store/selectors/filter';
 
 interface Props {
   visible: boolean;
@@ -69,12 +70,9 @@ const Loader = styled(View)`
 `;
 
 export const FilterModal = ({ visible, setVisible }: Props) => {
-  const { type, types, typeLoading } = useSelector(
-    state => state.FilterReducer,
-  );
+  const { type, types, typeLoading } = useSelector(selectFilter);
   const dispatch = useDispatch();
   const theme = useTheme();
-
   const action = (name: string) => {
     dispatch(getPokemonByType(name));
   };

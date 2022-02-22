@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLegendariesPokemonsList } from '../src/store/actions';
 import { FlatListFooter } from '../src/components/Footer';
 import { ItemRenderProps } from '../api/types';
 import { Fonts } from '../src/theme/fonts';
 import { LegendariesCard } from '../src/components/LegendariesCard';
+import { selectPokemons } from '../src/store/selectors/pokemons';
+import { getLegendariesPokes } from '../src/store/saga/utils/utils';
 
 const Wrapper = styled(View)`
   flex: 1;
@@ -24,10 +25,10 @@ const Title = styled(Text)`
 export const Legendaries = () => {
   const [pagination, setPagination] = useState(898);
   const dispatch = useDispatch();
-  const { legendariesPokemons } = useSelector(state => state.PokemonReducer);
+  const { legendariesPokemons } = useSelector(selectPokemons);
 
   useEffect(() => {
-    dispatch(getLegendariesPokemonsList(pagination));
+    dispatch(getLegendariesPokes(pagination));
   }, [pagination, dispatch]);
 
   const loadMore = () => {

@@ -23,6 +23,8 @@ export enum TYPE {
 
 export enum SAGATYPE {
   GET_POKES = 'GET_POKES',
+  GET_L_POKES = 'GET_L_POKES',
+  GET_TYPES = 'GET_TYPES',
 }
 
 export interface Store {
@@ -45,7 +47,7 @@ export interface FilterReducer {
   attackFrom: number;
   attackTo: number;
   types: Types[];
-  type: Pick<Types, 'type'>;
+  type: string;
   loading: boolean;
   typeLoading: boolean;
 }

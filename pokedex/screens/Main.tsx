@@ -18,6 +18,7 @@ import { Fonts } from '../src/theme/fonts';
 import { getPokes } from '../src/store/saga/utils/utils';
 import { selectPokemons } from '../src/store/selectors/pokemons';
 import { selectFilter } from '../src/store/selectors/filter';
+import { SAGATYPE } from '../src/store/types';
 
 const Background = styled(View)`
   background-color: ${props => props.theme.body};
@@ -60,7 +61,7 @@ export const Main = () => {
   const [filterVisible, setFilterVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const { pokemons, filteredByTypePokemons } = useSelector(selectPokemons);
-  const { type, experienceFrom, experienceTo, attackFrom, attackTo } =
+  const { type, types, experienceFrom, experienceTo, attackFrom, attackTo } =
     useSelector(selectFilter);
   const dispatch = useDispatch();
   const limit = pagination < 898 && filteredByTypePokemons.length === 0;
@@ -103,7 +104,7 @@ export const Main = () => {
 
   const openFilterModal = () => {
     setFilterVisible(true);
-    dispatch(getTypes());
+    dispatch({ type: SAGATYPE.GET_TYPES });
   };
 
   return (
