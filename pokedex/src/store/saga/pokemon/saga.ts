@@ -28,6 +28,16 @@ const getLPokes = async (page: number) => {
   return await Promise.all(datas);
 };
 
+const getPokemonByType = async (type: string) => {
+  const response = await axios.get(`https://pokeapi.co/api/v2/type/${type}`);
+
+  const datas = response.data.pokemon.map(el =>
+    fetch(el.pokemon.url).then(res => res.json()),
+  );
+
+  return await Promise.all(datas);
+};
+
 function* pokemonWorker(action) {
   const { page } = action;
   yield put({ type: TYPE.GET_POKES_LOADING });
@@ -50,7 +60,20 @@ function* legendariesPokemonWorker(action) {
   }
 }
 
+function* pokesTypesWorker(action) {
+  const { typeName } = action;
+  yield put({ type: TYPE.GET_POKEMON_BY_TYPE_LOADING });
+  try {
+    const pokemons: PokemonTypes[] = yield call(getPokemonByType, typeName);
+    yield put({
+      type: TYPE.GET_POKEMON_BY_TYPE_SUCCESS,
+      payload: { type: typeName, pokemons },
+    });
+  } catch (error) {}
+}
+
 export function* pokemonWatcher() {
   yield takeEvery(SAGATYPE.GET_POKES, pokemonWorker);
   yield takeEvery(SAGATYPE.GET_L_POKES, legendariesPokemonWorker);
+  yield takeEvery(SAGATYPE.GET_POKEMON_BY_TYPE, pokesTypesWorker);
 }

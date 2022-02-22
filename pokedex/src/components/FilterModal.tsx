@@ -16,6 +16,7 @@ import { TypeRenderProps } from '../../api/types';
 import { ExpAttFilter } from './ExpAttFilter';
 import { Fonts } from '../theme/fonts';
 import { selectFilter } from '../store/selectors/filter';
+import { getPokeByType } from '../store/saga/utils/utils';
 
 interface Props {
   visible: boolean;
@@ -74,7 +75,7 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const action = (name: string) => {
-    dispatch(getPokemonByType(name));
+    dispatch(getPokeByType(name));
   };
 
   const renderTypes = ({ item }: TypeRenderProps) => {

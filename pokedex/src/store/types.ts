@@ -1,4 +1,4 @@
-import { PokemonTypes, Types } from '../../api/types';
+import { PokemonTypes, Result } from '../../api/types';
 
 export enum TYPE {
   GET_POKES_LOADING = 'GET_POKES_LOADING',
@@ -25,6 +25,7 @@ export enum SAGATYPE {
   GET_POKES = 'GET_POKES',
   GET_L_POKES = 'GET_L_POKES',
   GET_TYPES = 'GET_TYPES',
+  GET_POKEMON_BY_TYPE = 'GET_POKEMON_BY_TYPE',
 }
 
 export interface Store {
@@ -46,7 +47,7 @@ export interface FilterReducer {
   experienceTo: number;
   attackFrom: number;
   attackTo: number;
-  types: Types[];
+  types: Result[];
   type: string;
   loading: boolean;
   typeLoading: boolean;
