@@ -16,3 +16,11 @@ export const getPokeByType = (type: string) => {
 export const setPoke = (pokemon: PokemonTypes) => {
   return { type: SAGATYPE.SET_POKEMON, pokemon };
 };
+
+export const setAttack = (from: number, to: number) => {
+  return { type: SAGATYPE.SET_ATTACK, from, to };
+};
+
+export const setExp = (from: number, to: number) => {
+  return { type: SAGATYPE.SET_EXP, from, to };
+};

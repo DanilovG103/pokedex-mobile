@@ -122,7 +122,7 @@ export const Main = () => {
       <FlatList
         refreshing={refreshing}
         onScrollToTop={() => setRefreshing(true)}
-        onRefresh={() => dispatch(Refresh())}
+        onRefresh={() => dispatch({ type: SAGATYPE.REFRESH })}
         showsVerticalScrollIndicator={false}
         data={
           type === null

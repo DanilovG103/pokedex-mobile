@@ -3,8 +3,9 @@ import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import styled from 'styled-components';
 import { Colors } from '../theme/colors';
 import { useDispatch, useSelector } from 'react-redux';
-import { setExperience, setAttack } from '../store/actions';
+// import { setExperience, setAttack } from '../store/actions';
 import { selectFilter } from '../store/selectors/filter';
+import { setExp, setAttack } from '../store/saga/utils/utils';
 
 const ExpAttBlock = styled(View)`
   background-color: ${Colors.white[4]};
@@ -66,7 +67,7 @@ export const ExpAttFilter = ({ filterType }: Props) => {
 
   const setFilterValues = (firstValue: number, secondValue: number) => {
     filterType === 'exp'
-      ? dispatch(setExperience(firstValue, secondValue))
+      ? dispatch(setExp(firstValue, secondValue))
       : dispatch(setAttack(firstValue, secondValue));
   };
 

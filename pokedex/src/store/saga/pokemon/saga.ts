@@ -83,10 +83,15 @@ function* removePokemonsWorker() {
   yield put({ type: TYPE.CLEAR_COMPARED_POKEMONS });
 }
 
+function* refresh() {
+  yield put({ type: TYPE.REFRESH });
+}
+
 export function* pokemonWatcher() {
   yield takeEvery(SAGATYPE.GET_POKES, pokemonWorker);
   yield takeEvery(SAGATYPE.GET_L_POKES, legendariesPokemonWorker);
   yield takeEvery(SAGATYPE.GET_POKEMON_BY_TYPE, pokesTypesWorker);
   yield takeEvery(SAGATYPE.SET_POKEMON, setPokemonWorker);
   yield takeEvery(SAGATYPE.REMOVE_POKEMONS, removePokemonsWorker);
+  yield takeEvery(SAGATYPE.REFRESH, refresh);
 }

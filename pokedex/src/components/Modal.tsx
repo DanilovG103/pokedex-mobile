@@ -159,7 +159,7 @@ export const PokemonModal = ({ visible, setIsVisible, data }: Props) => {
           </YellowCircle>
           <TypesRow>
             {data.types.map(el => (
-              <TypeBlock type={el.type.name}>
+              <TypeBlock key={el.type.name} type={el.type.name}>
                 <Types>{el.type.name}</Types>
               </TypeBlock>
             ))}
@@ -168,7 +168,7 @@ export const PokemonModal = ({ visible, setIsVisible, data }: Props) => {
         <InfoBlock>
           <AbilitiesBlockTitle>Abilities</AbilitiesBlockTitle>
           {data.abilities.map(el => (
-            <Ability>
+            <Ability key={el.ability.name}>
               {'-'}
               {el.ability.name}
             </Ability>
@@ -184,7 +184,7 @@ export const PokemonModal = ({ visible, setIsVisible, data }: Props) => {
           {data.stats
             .filter(el => el.stat.name !== 'hp' && el.stat.name !== 'speed')
             .map(el => (
-              <Block>
+              <Block key={el.effort}>
                 <Circle>
                   <StatisticsValue>{el.base_stat}</StatisticsValue>
                 </Circle>

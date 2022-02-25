@@ -19,6 +19,23 @@ function* typesWorker() {
   }
 }
 
+function* refreshWorker() {
+  yield put({ type: TYPE.REFRESH });
+}
+
+function* attackWorker(action) {
+  const { from, to } = action;
+  yield put({ type: TYPE.SET_ATTACK, payload: { from, to } });
+}
+
+function* expWorker(action) {
+  const { from, to } = action;
+  yield put({ type: TYPE.SET_EXPERIENCE, payload: { from, to } });
+}
+
 export function* filterWatcher() {
   yield takeEvery(SAGATYPE.GET_TYPES, typesWorker);
+  yield takeEvery(SAGATYPE.REFRESH, refreshWorker);
+  yield takeEvery(SAGATYPE.SET_ATTACK, attackWorker);
+  yield takeEvery(SAGATYPE.SET_EXP, expWorker);
 }
