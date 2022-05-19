@@ -15,6 +15,11 @@ import { ItemRenderProps } from '../api/types';
 import { FilterModal } from '../src/components/FilterModal';
 import { FlatListFooter } from '../src/components/Footer';
 import { Fonts } from '../src/theme/fonts';
+import {
+  usePokemonStore,
+  useGetPokemonsEvent,
+} from '../src/store/effector/pokemon-store';
+import { useEvent } from 'effector-react';
 
 const Background = styled(View)`
   background-color: ${props => props.theme.body};
@@ -52,17 +57,21 @@ const Filter = styled(TouchableOpacity)`
 `;
 
 export const Main = () => {
+  const { pokemons, loading } = usePokemonStore();
+  const getPokes = useGetPokemonsEvent();
   const [pagination, setPagination] = useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [filterVisible, setFilterVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const { pokemons, filteredByTypePokemons } = useSelector(
+  const { pokemon, filteredByTypePokemons } = useSelector(
     state => state.PokemonReducer,
   );
+
   const { type, experienceFrom, experienceTo, attackFrom, attackTo } =
     useSelector(state => state.FilterReducer);
   const dispatch = useDispatch();
-  const limit = pagination < 898 && filteredByTypePokemons.length === 0;
+  const limit =
+    loading || (pagination < 898 && filteredByTypePokemons.length === 0);
 
   const filterPokemons = arr => {
     return arr
@@ -83,9 +92,9 @@ export const Main = () => {
 
   useEffect(() => {
     if (limit) {
-      dispatch(getPokemonsList(pagination));
+      getPokes(pagination);
     }
-  }, [pagination, dispatch, limit]);
+  }, [pagination, limit, getPokes]);
 
   const loadMore = () => {
     setPagination(prevState => prevState + 1);
