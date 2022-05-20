@@ -2,14 +2,13 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useDispatch } from 'react-redux';
 import styled, { useTheme } from 'styled-components';
 import { Colors } from '../theme/colors';
 import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
-import { setPokemon } from '../store/actions';
 import { TypeBlock } from './TypeBlock';
 import { Fonts } from '../theme/fonts';
 import { PokemonTypes } from '../../api/types';
+import { useSetPokemon } from '../store/effector/pokemon-store';
 
 interface Props {
   visible: boolean;
@@ -124,8 +123,8 @@ const PokeImage = styled(Image)`
 `;
 
 export const PokemonModal = ({ visible, setIsVisible, data }: Props) => {
-  const dispatch = useDispatch();
   const theme = useTheme();
+  const setPokemon = useSetPokemon();
 
   return (
     <Modal
@@ -139,7 +138,7 @@ export const PokemonModal = ({ visible, setIsVisible, data }: Props) => {
             <CloseIcon darkTheme={theme.type === 'dark'} />
           </TouchableOpacity>
           <Title>{data.name}</Title>
-          <TouchableOpacity onPress={() => dispatch(setPokemon(data))}>
+          <TouchableOpacity onPress={() => setPokemon(data)}>
             <Icon
               name="bar-chart"
               size={30}

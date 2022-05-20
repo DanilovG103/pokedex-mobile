@@ -1,13 +1,15 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
 import styled, { useTheme } from 'styled-components';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ItemRenderProps } from '../api/types';
 import { ComparingCard } from '../src/components/ComparingCard';
-import { clearComparedPokemons } from '../src/store/actions';
 import { Fonts } from '../src/theme/fonts';
 import { Colors } from '../src/theme/colors';
+import {
+  useClearPokemons,
+  usePokemonStore,
+} from '../src/store/effector/pokemon-store';
 
 const Container = styled(View)`
   flex: 1;
@@ -31,8 +33,8 @@ const ClearIcon = styled(TouchableOpacity)`
 `;
 
 export const Compare = () => {
-  const { comparedPokemons } = useSelector(state => state.PokemonReducer);
-  const dispatch = useDispatch();
+  const { comparedPokemons } = usePokemonStore();
+  const clearPokemons = useClearPokemons();
   const theme = useTheme();
 
   if (comparedPokemons.length === 0) {
@@ -55,7 +57,7 @@ export const Compare = () => {
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id.toString()}
       />
-      <ClearIcon onPress={() => dispatch(clearComparedPokemons())}>
+      <ClearIcon onPress={clearPokemons}>
         <Icon
           name="trash"
           size={30}
