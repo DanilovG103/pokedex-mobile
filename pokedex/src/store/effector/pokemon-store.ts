@@ -1,5 +1,5 @@
 import { createStore, createEffect, createEvent } from 'effector';
-import { useStore, useEvent } from 'effector-react';
+import { useStore } from 'effector-react';
 import axios from 'axios';
 import { PokemonTypes } from '../../../api/types';
 
@@ -22,7 +22,7 @@ const initialState: State = {
   filteredByTypePokemons: [],
 };
 
-const getLegendariesPokemons = createEffect<number, PokemonTypes[]>(
+export const getLegendariesPokemons = createEffect<number, PokemonTypes[]>(
   async page => {
     const response = await api.get(`/pokemon/?offset=${page}&limit=9`);
 
@@ -36,7 +36,7 @@ const getLegendariesPokemons = createEffect<number, PokemonTypes[]>(
   },
 );
 
-const getPokemons = createEffect<number, PokemonTypes[]>(async page => {
+export const getPokemons = createEffect<number, PokemonTypes[]>(async page => {
   const offset = page * 9;
   const response = await api.get(`/pokemon/?offset=${offset}&limit=9`);
 
@@ -49,13 +49,13 @@ const getPokemons = createEffect<number, PokemonTypes[]>(async page => {
   return pokemons;
 });
 
-const setPokemon = (state: PokemonTypes[], payload: PokemonTypes) => {
+const setPokemonHandler = (state: PokemonTypes[], payload: PokemonTypes) => {
   return [...state, payload];
 };
 
-const setPokemonEvent = createEvent<PokemonTypes>();
+export const setPokemon = createEvent<PokemonTypes>();
 
-const clearPokemonsEvent = createEvent();
+export const clearPokemons = createEvent();
 
 const pokemonStore = createStore(initialState)
   .on(getPokemons.pending, (state, loading) => ({ ...state, loading }))
@@ -73,19 +73,13 @@ const pokemonStore = createStore(initialState)
     ...state,
     legendariesPokemons: state.legendariesPokemons.concat(pokemons),
   }))
-  .on(setPokemonEvent, (state, payload) => ({
+  .on(setPokemon, (state, payload) => ({
     ...state,
-    comparedPokemons: setPokemon(state.comparedPokemons, payload),
+    comparedPokemons: setPokemonHandler(state.comparedPokemons, payload),
   }))
-  .on(clearPokemonsEvent, state => ({
+  .on(clearPokemons, state => ({
     ...state,
     comparedPokemons: [],
   }));
 
 export const usePokemonStore = () => useStore(pokemonStore);
-export const useGetPokemonsEvent = () => useEvent(getPokemons);
-export const useGetLPokesEvent = () => useEvent(getLegendariesPokemons);
-export const useSetPokemon = () => useEvent(setPokemonEvent);
-export const useClearPokemons = () => useEvent(clearPokemonsEvent);
-
-clearPokemonsEvent.watch(_ => console.log('Triggered'));

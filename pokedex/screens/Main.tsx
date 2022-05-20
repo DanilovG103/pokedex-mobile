@@ -17,9 +17,8 @@ import { FlatListFooter } from '../src/components/Footer';
 import { Fonts } from '../src/theme/fonts';
 import {
   usePokemonStore,
-  useGetPokemonsEvent,
+  getPokemons,
 } from '../src/store/effector/pokemon-store';
-import { useEvent } from 'effector-react';
 
 const Background = styled(View)`
   background-color: ${props => props.theme.body};
@@ -58,7 +57,6 @@ const Filter = styled(TouchableOpacity)`
 
 export const Main = () => {
   const { pokemons, loading } = usePokemonStore();
-  const getPokes = useGetPokemonsEvent();
   const [pagination, setPagination] = useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [filterVisible, setFilterVisible] = useState(false);
@@ -92,9 +90,9 @@ export const Main = () => {
 
   useEffect(() => {
     if (limit) {
-      getPokes(pagination);
+      getPokemons(pagination);
     }
-  }, [pagination, limit, getPokes]);
+  }, [pagination, limit]);
 
   const loadMore = () => {
     setPagination(prevState => prevState + 1);

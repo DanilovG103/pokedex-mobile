@@ -8,7 +8,7 @@ import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
 import { TypeBlock } from './TypeBlock';
 import { Fonts } from '../theme/fonts';
 import { PokemonTypes } from '../../api/types';
-import { useSetPokemon } from '../store/effector/pokemon-store';
+import { setPokemon } from '../store/effector/pokemon-store';
 
 interface Props {
   visible: boolean;
@@ -124,7 +124,6 @@ const PokeImage = styled(Image)`
 
 export const PokemonModal = ({ visible, setIsVisible, data }: Props) => {
   const theme = useTheme();
-  const setPokemon = useSetPokemon();
 
   return (
     <Modal
