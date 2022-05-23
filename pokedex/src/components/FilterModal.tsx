@@ -10,11 +10,11 @@ import {
 import styled, { useTheme } from 'styled-components';
 import { Colors } from '../theme/colors';
 import { CloseIcon } from '../../resources/assets/images/icons/CloseIcon';
-import { useSelector, useDispatch } from 'react-redux';
-import { getPokemonByType } from '../store/actions';
 import { TypeRenderProps } from '../../api/types';
 import { ExpAttFilter } from './ExpAttFilter';
 import { Fonts } from '../theme/fonts';
+import { setType, useFilterStore } from '../store/effector/filter-store';
+import { getPokemonByType } from '../store/effector/pokemon-store';
 
 interface Props {
   visible: boolean;
@@ -69,14 +69,12 @@ const Loader = styled(View)`
 `;
 
 export const FilterModal = ({ visible, setVisible }: Props) => {
-  const { type, types, typeLoading } = useSelector(
-    state => state.FilterReducer,
-  );
-  const dispatch = useDispatch();
+  const { types, type, loading } = useFilterStore();
   const theme = useTheme();
 
   const action = (name: string) => {
-    dispatch(getPokemonByType(name));
+    setType(name);
+    getPokemonByType(name);
   };
 
   const renderTypes = ({ item }: TypeRenderProps) => {
@@ -105,19 +103,18 @@ export const FilterModal = ({ visible, setVisible }: Props) => {
       }}>
       <Block>
         <Title>Type</Title>
-        {typeLoading ? (
+        {loading ? (
           <Loader>
             <ActivityIndicator size="large" />
           </Loader>
-        ) : null}
-        <FlatList
-          data={types.filter(
-            item => item.name !== 'unknown' && item.name !== 'shadow',
-          )}
-          numColumns={3}
-          keyExtractor={item => item.name}
-          renderItem={renderTypes}
-        />
+        ) : (
+          <FlatList
+            data={types}
+            numColumns={3}
+            keyExtractor={item => item.name}
+            renderItem={renderTypes}
+          />
+        )}
         <Line />
         <Title>Experience</Title>
         <ExpAttFilter filterType="exp" />

@@ -1,11 +1,8 @@
 import { createStore, createEffect, createEvent } from 'effector';
 import { useStore } from 'effector-react';
-import axios from 'axios';
 import { PokemonTypes } from '../../../api/types';
+import { api } from '../../../api/axios';
 
-const api = axios.create({
-  baseURL: 'https://pokeapi.co/api/v2',
-});
 interface State {
   loading: boolean;
   pokemons: PokemonTypes[];
@@ -53,6 +50,20 @@ const setPokemonHandler = (state: PokemonTypes[], payload: PokemonTypes) => {
   return [...state, payload];
 };
 
+export const getPokemonByType = createEffect<string, PokemonTypes[]>(
+  async type => {
+    const response = await api.get(`/type/${type}`);
+
+    const datas = response.data.pokemon.map(el =>
+      fetch(el.pokemon.url).then(res => res.json()),
+    );
+
+    const pokemons = await Promise.all(datas);
+
+    return pokemons;
+  },
+);
+
 export const setPokemon = createEvent<PokemonTypes>();
 
 export const clearPokemons = createEvent();
@@ -80,6 +91,15 @@ const pokemonStore = createStore(initialState)
   .on(clearPokemons, state => ({
     ...state,
     comparedPokemons: [],
+  }))
+  .on(getPokemonByType.pending, (state, loading) => ({
+    ...state,
+    loading,
+  }))
+  .on(getPokemonByType.failData, (_, err) => console.log(err))
+  .on(getPokemonByType.doneData, (state, pokes) => ({
+    ...state,
+    filteredByTypePokemons: pokes,
   }));
 
 export const usePokemonStore = () => useStore(pokemonStore);

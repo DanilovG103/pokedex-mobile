@@ -6,12 +6,10 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Colors } from '../src/theme/colors';
 import { PokemonCard } from '../src/components/PokemonCard';
-import { getPokemonsList, getTypes, Refresh } from '../src/store/actions';
-import { ItemRenderProps } from '../api/types';
+import { ItemRenderProps, PokemonTypes } from '../api/types';
 import { FilterModal } from '../src/components/FilterModal';
 import { FlatListFooter } from '../src/components/Footer';
 import { Fonts } from '../src/theme/fonts';
@@ -19,6 +17,11 @@ import {
   usePokemonStore,
   getPokemons,
 } from '../src/store/effector/pokemon-store';
+import {
+  getTypes,
+  useFilterStore,
+  refresh,
+} from '../src/store/effector/filter-store';
 
 const Background = styled(View)`
   background-color: ${props => props.theme.body};
@@ -56,22 +59,18 @@ const Filter = styled(TouchableOpacity)`
 `;
 
 export const Main = () => {
-  const { pokemons, loading } = usePokemonStore();
+  const { pokemons, loading, filteredByTypePokemons } = usePokemonStore();
+  const { type, experienceFrom, experienceTo, attackFrom, attackTo } =
+    useFilterStore();
   const [pagination, setPagination] = useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [filterVisible, setFilterVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const { pokemon, filteredByTypePokemons } = useSelector(
-    state => state.PokemonReducer,
-  );
 
-  const { type, experienceFrom, experienceTo, attackFrom, attackTo } =
-    useSelector(state => state.FilterReducer);
-  const dispatch = useDispatch();
   const limit =
     loading || (pagination < 898 && filteredByTypePokemons.length === 0);
 
-  const filterPokemons = arr => {
+  const filterPokemons = (arr: PokemonTypes[]) => {
     return arr
       .filter(item =>
         item.name.toLowerCase().includes(searchValue.toLowerCase()),
@@ -109,7 +108,7 @@ export const Main = () => {
 
   const openFilterModal = () => {
     setFilterVisible(true);
-    dispatch(getTypes());
+    getTypes();
   };
 
   return (
@@ -127,7 +126,7 @@ export const Main = () => {
       <FlatList
         refreshing={refreshing}
         onScrollToTop={() => setRefreshing(true)}
-        onRefresh={() => dispatch(Refresh())}
+        onRefresh={() => refresh()}
         showsVerticalScrollIndicator={false}
         data={
           type === null
